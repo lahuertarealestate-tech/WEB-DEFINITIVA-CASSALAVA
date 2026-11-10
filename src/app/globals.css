@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+@theme {
+  --color-granate: #550000;
+  --color-cal: #f7f6f4;
+  --font-serif: var(--font-garamond), "EB Garamond", Garamond, serif;
+}
+
+html {
+  font-family: var(--font-serif);
+  -webkit-font-smoothing: antialiased;
+}
