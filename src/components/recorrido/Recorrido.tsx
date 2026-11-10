@@ -121,20 +121,9 @@ export default function Recorrido({ tramos }: { tramos: Tramo[] }) {
 
     const pintar = (pos: number) => {
       if (!total) return;
-      const a = Math.floor(pos);
-      const b = Math.min(a + 1, total - 1);
-      const f = pos - a;
-      const ia = masCercana(a);
-      if (!ia) return;
-      ctx.globalAlpha = 1;
-      cubrir(ia);
-      const ib = masCercana(b);
-      // fundido entre fotogramas vecinos: el movimiento es continuo
-      if (ib && ib !== ia && f > 0.02) {
-        ctx.globalAlpha = f;
-        cubrir(ib);
-        ctx.globalAlpha = 1;
-      }
+      // fotograma entero más cercano: mezclar dos fotogramas crea imágenes dobles
+      const img = masCercana(Math.min(total - 1, Math.max(0, Math.round(pos))));
+      if (img) cubrir(img);
     };
 
     const progreso = () => {
@@ -167,10 +156,10 @@ export default function Recorrido({ tramos }: { tramos: Tramo[] }) {
       // pequeña inercia extra para que el táctil también sea suave
       actual += (objetivo - actual) * 0.35;
       if (Math.abs(objetivo - actual) < 0.01) actual = objetivo;
-      if (Math.abs(actual - pintado) > 0.004) {
+      if (Math.round(actual) !== pintado) {
         ajustar();
         pintar(actual);
-        pintado = actual;
+        pintado = Math.round(actual);
       }
       actualizarTextos(p);
     };
