@@ -1,0 +1,5 @@
+{
+  "version": "provisional-1",
+  "escritorio": { "carpeta": "/recorrido/escritorio", "total": 240, "ancho": 1600, "alto": 900, "ext": "webp", "digitos": 4 },
+  "movil": { "carpeta": "/recorrido/movil", "total": 120, "ancho": 540, "alto": 960, "ext": "webp", "digitos": 4 }
+}

@@ -1,12 +1,130 @@
 @import "tailwindcss";
 
+/* ----------------------------------------------------------------------
+   Identidad CASSALAVA
+   Granate #550000 como color propio, usado en campos grandes y no solo
+   como acento. Todo en Garamond (EB Garamond).
+   ---------------------------------------------------------------------- */
 @theme {
   --color-granate: #550000;
+  --color-granate-oscuro: #3b0000;
+  --color-granate-claro: #7a1f1f;
   --color-cal: #f7f6f4;
-  --font-serif: var(--font-garamond), "EB Garamond", Garamond, serif;
+  --color-yeso: #ebe7e3;
+  --color-piedra: #8c837c;
+  --color-tinta: #1d1716;
+
+  --font-serif: var(--font-garamond), "EB Garamond", Garamond, "Times New Roman", serif;
+
+  --text-cuerpo: 1.1875rem;
+  --text-cuerpo--line-height: 1.6;
+  --text-entradilla: 1.5rem;
+  --text-entradilla--line-height: 1.45;
+  --text-titulo: clamp(2rem, 1.4rem + 2.4vw, 3.25rem);
+  --text-titulo--line-height: 1.08;
+  --text-portada: clamp(2.75rem, 1.6rem + 5vw, 6rem);
+  --text-portada--line-height: 1;
+
+  --ease-suave: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root {
+  color-scheme: light;
 }
 
 html {
+  background: var(--color-cal);
+  color: var(--color-tinta);
   font-family: var(--font-serif);
+  font-size: 100%;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-kerning: normal;
+  font-variant-ligatures: common-ligatures;
+}
+
+body {
+  font-size: var(--text-cuerpo);
+  line-height: var(--text-cuerpo--line-height);
+}
+
+::selection {
+  background: var(--color-granate);
+  color: var(--color-cal);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-granate);
+  outline-offset: 3px;
+}
+
+.sobre-oscuro :focus-visible,
+.bg-granate :focus-visible {
+  outline-color: var(--color-cal);
+}
+
+/* Logo tipográfico: el único texto en mayúsculas espaciadas */
+.logo {
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* Cifras de estilo antiguo, propias de Garamond */
+.cifras {
+  font-variant-numeric: oldstyle-nums proportional-nums;
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+.lenis [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* Enlace subrayado de texto */
+.enlace {
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  transition: text-decoration-color 0.2s;
+}
+.enlace:hover {
+  text-decoration-color: transparent;
+}
+
+/* Contenido legal */
+.prosa h2 {
+  font-size: 1.6rem;
+  line-height: 1.2;
+  margin: 2.5rem 0 0.75rem;
+}
+.prosa p,
+.prosa ul {
+  margin: 0 0 1rem;
+}
+.prosa ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+}
+.prosa a {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
