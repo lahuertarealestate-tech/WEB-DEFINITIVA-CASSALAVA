@@ -32,6 +32,7 @@ export const metadata: Metadata = {
   },
   twitter: { card: "summary_large_image" },
   alternates: { canonical: "/" },
+  robots: site.indexar ? undefined : { index: false, follow: false },
 };
 
 export const viewport: Viewport = {

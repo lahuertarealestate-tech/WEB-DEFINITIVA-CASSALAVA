@@ -4,7 +4,10 @@
 
 export const site = {
   nombre: "CASSALAVA",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://cassalava.vercel.app",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://cassalava2.vercel.app",
+  // Mientras haya datos provisionales, la web pide a Google que no la indexe.
+  // Cámbialo a true cuando el contenido sea definitivo.
+  indexar: false,
   descripcion:
     "Estudio de arquitectura, diseño y construcción. Proyectamos y construimos viviendas de principio a fin, con un solo equipo.",
 
