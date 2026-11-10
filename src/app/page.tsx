@@ -11,38 +11,36 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
-// Textos sincronizados con el recorrido (0 = fachada, 1 = final en la obra)
+// Textos sincronizados con el recorrido (0 = jardín, 0.3 = fachada, 0.5 = puerta, 0.75 = salón, 1 = final)
 const tramos: Tramo[] = [
   {
     desde: 0,
-    hasta: 0.1,
+    hasta: 0.09,
     principal: true,
     titulo: "Arquitectura, diseño y construcción",
     texto: "Proyectamos y construimos tu casa de principio a fin, con un solo equipo y un solo interlocutor.",
   },
   {
-    desde: 0.15,
-    hasta: 0.29,
+    desde: 0.14,
+    hasta: 0.32,
     titulo: "Arquitectura",
     texto: "Dibujamos la casa a partir del terreno, la luz y la forma en que vas a vivir en ella.",
   },
   {
-    desde: 0.4,
-    hasta: 0.54,
-    lado: "derecha",
+    desde: 0.53,
+    hasta: 0.69,
     titulo: "Diseño de interiores",
     texto: "Materiales, iluminación y mobiliario a medida, decididos antes de empezar la obra.",
   },
   {
-    desde: 0.6,
-    hasta: 0.73,
+    desde: 0.75,
+    hasta: 0.87,
     titulo: "Recorre tu casa antes de construirla",
     texto: "Cada proyecto se presenta en 3D para que puedas pasear por él y cambiar lo que quieras sobre plano.",
   },
   {
-    desde: 0.84,
+    desde: 0.91,
     hasta: 1,
-    lado: "derecha",
     titulo: "Construcción",
     texto: "Equipo propio, presupuesto por partidas y un jefe de obra que te informa cada semana.",
   },

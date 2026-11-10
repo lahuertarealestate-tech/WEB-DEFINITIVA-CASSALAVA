@@ -31,20 +31,21 @@ Los textos que aparecen en cada tramo se editan en `src/app/page.tsx` (`tramos`,
 
 ### Cambiar el vídeo
 
-Con el vídeo definitivo (cuanto más estable y lento el movimiento, mejor):
+Con el vídeo definitivo (un solo plano, sin cortes, movimiento lento y continuo):
 
 ```bash
-./scripts/video-a-fotogramas.sh ruta/al/recorrido.mp4          # 300 escritorio + 150 móvil
-./scripts/video-a-fotogramas.sh ruta/al/recorrido.mp4 360 180  # o el número que quieras
+pip install numpy pillow opencv-python-headless   # una vez
+python3 scripts/video-a-fotogramas.py ruta/al/recorrido.mp4
 ```
 
-El script borra los fotogramas anteriores, genera los nuevos y actualiza el manifest. El vídeo original no se sube
-al repositorio (está en `.gitignore`).
+El script borra los fotogramas anteriores y genera los nuevos (escritorio y recorte vertical para móvil). También
+mide cuánto se mueve la cámara en cada tramo y guarda en `manifest.json` una curva de ritmo, para que al hacer
+scroll la cámara avance a velocidad constante aunque en el vídeo vaya más lenta en algunos tramos (`--ritmo 0` lo
+desactiva). Después hay que revisar los tramos de texto en `src/app/page.tsx`. El vídeo original no se sube al
+repositorio (está en `.gitignore`).
 
-### Fotogramas provisionales
-
-Los actuales son un render 3D generado por código (`scripts/recorrido-provisional/`), solo para maquetar. Se pueden
-regenerar con `scripts/recorrido-provisional/run_all.sh` (necesita Python con numpy, numba y Pillow).
+El recorrido actual es un vídeo provisional generado con IA (Gemini). `scripts/recorrido-provisional/` contiene el
+render 3D por código que se usó antes de tenerlo.
 
 ## Variables de entorno (Vercel → Settings → Environment Variables)
 

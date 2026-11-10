@@ -21,7 +21,13 @@ type Juego = {
   digitos: number;
 };
 
-type Manifest = { version: string; escritorio: Juego; movil: Juego };
+type Manifest = {
+  version: string;
+  escritorio: Juego;
+  movil: Juego;
+  /** Progreso de scroll (0–1) de cada fotograma, para que la cámara avance a ritmo constante */
+  ritmo?: number[];
+};
 
 export type Tramo = {
   /** Progreso del recorrido (0–1) en el que aparece el texto */
@@ -63,6 +69,7 @@ export default function Recorrido({ tramos }: { tramos: Tramo[] }) {
     let cancelado = false;
     let imagenes: (HTMLImageElement | null)[] = [];
     let total = 0;
+    let ritmo: number[] | null = null;
     let actual = 0; // fotograma (con decimales) pintado
     let pintado = -1;
     let raf = 0;
@@ -132,6 +139,20 @@ export default function Recorrido({ tramos }: { tramos: Tramo[] }) {
       return recorrido > 0 ? Math.min(1, Math.max(0, -r.top / recorrido)) : 0;
     };
 
+    // progreso del scroll (0–1) → fotograma (con decimales)
+    const fotogramaDe = (p: number) => {
+      if (!ritmo || ritmo.length !== total) return p * (total - 1);
+      let lo = 0;
+      let hi = total - 1;
+      while (hi - lo > 1) {
+        const mid = (lo + hi) >> 1;
+        if (ritmo[mid] <= p) lo = mid;
+        else hi = mid;
+      }
+      const tramo = ritmo[hi] - ritmo[lo];
+      return lo + (tramo > 0 ? Math.min(1, Math.max(0, (p - ritmo[lo]) / tramo)) : 0);
+    };
+
     const actualizarTextos = (p: number) => {
       const fundido = 0.025;
       tramos.forEach((t, i) => {
@@ -152,7 +173,7 @@ export default function Recorrido({ tramos }: { tramos: Tramo[] }) {
       raf = requestAnimationFrame(bucle);
       if (!total) return;
       const p = progreso();
-      const objetivo = p * (total - 1);
+      const objetivo = fotogramaDe(p);
       // pequeña inercia extra para que el táctil también sea suave
       actual += (objetivo - actual) * 0.35;
       if (Math.abs(objetivo - actual) < 0.01) actual = objetivo;
@@ -179,6 +200,7 @@ export default function Recorrido({ tramos }: { tramos: Tramo[] }) {
         if (cancelado) return;
         const juego = movil ? m.movil : m.escritorio;
         total = juego.total;
+        ritmo = m.ritmo ?? null;
         imagenes = new Array(total).fill(null);
         const url = (i: number) =>
           `${juego.carpeta}/${String(i).padStart(juego.digitos, "0")}.${juego.ext}?v=${encodeURIComponent(m.version)}`;
