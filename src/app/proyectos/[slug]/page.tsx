@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: PageProps<"/proyectos/[slug]"
     title: `${p.titulo}, ${p.lugar}`,
     description: p.resumen,
     alternates: { canonical: `/proyectos/${p.slug}` },
-    openGraph: { images: [{ url: p.portada, width: 1600, height: 1000 }] },
+    openGraph: { images: [{ url: p.portada, width: 1800, height: 1208 }] },
   };
 }
 

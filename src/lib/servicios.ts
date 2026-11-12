@@ -38,7 +38,7 @@ export const servicios: Servicio[] = [
       "Cocinas, baños y mobiliario a medida",
       "Decoración y estilismo final",
     ],
-    imagen: "/proyectos/salon-mirador.webp",
+    imagen: "/proyectos/villa-salon.webp",
   },
   {
     slug: "construccion",

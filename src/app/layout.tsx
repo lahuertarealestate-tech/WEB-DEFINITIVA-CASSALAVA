@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "es_ES",
     siteName: "CASSALAVA",
-    images: [{ url: "/proyectos/casa-del-encinar.webp", width: 1600, height: 1000 }],
+    images: [{ url: "/proyectos/villa-entrada.webp", width: 1800, height: 1208 }],
   },
   twitter: { card: "summary_large_image" },
   alternates: { canonical: "/" },
