@@ -40,7 +40,7 @@ export default function CookieBanner() {
     <div
       role="dialog"
       aria-label="Preferencias de cookies"
-      className="fixed inset-x-3 bottom-3 z-50 max-w-[34rem] border border-tinta/15 bg-cal p-5 text-tinta shadow-[0_18px_50px_-20px_rgba(29,23,22,0.45)] md:inset-x-auto md:right-6 md:bottom-6 md:max-w-[26rem] md:p-6"
+      className="fixed inset-x-3 bottom-3 z-50 max-w-[34rem] border border-tinta/15 bg-fondo p-5 text-tinta shadow-[0_18px_50px_-20px_rgba(29,23,22,0.45)] md:inset-x-auto md:right-6 md:bottom-6 md:max-w-[26rem] md:p-6"
     >
       <p className="text-[1.0625rem] leading-snug">
         Usamos almacenamiento técnico para que la web funcione. Si lo aceptas, también usaremos cookies de

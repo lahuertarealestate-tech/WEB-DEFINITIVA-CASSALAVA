@@ -32,7 +32,7 @@ export default function Header() {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-40 transition-colors duration-500 ${
-        claro ? "sobre-oscuro bg-transparent text-cal" : "border-b border-tinta/10 bg-cal/95 text-tinta backdrop-blur"
+        claro ? "sobre-oscuro bg-transparent text-cal" : "border-b border-tinta/10 bg-fondo/95 text-tinta backdrop-blur"
       }`}
     >
       <div className="mx-auto flex h-[72px] max-w-[92rem] items-center justify-between px-5 md:px-12">
@@ -71,7 +71,7 @@ export default function Header() {
       </div>
 
       {abierto && (
-        <nav id="menu-movil" aria-label="Principal" className="h-[calc(100svh-72px)] bg-cal px-5 pt-6 md:hidden" data-lenis-prevent>
+        <nav id="menu-movil" aria-label="Principal" className="h-[calc(100svh-72px)] bg-fondo px-5 pt-6 md:hidden" data-lenis-prevent>
           <ul className="flex flex-col gap-1">
             {navegacion.map((n) => (
               <li key={n.href}>
