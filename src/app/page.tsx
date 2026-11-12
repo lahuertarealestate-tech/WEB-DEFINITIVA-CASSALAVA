@@ -21,22 +21,16 @@ const tramos: Tramo[] = [
     texto: "Proyectamos y construimos tu casa de principio a fin, con un solo equipo y un solo interlocutor.",
   },
   {
-    desde: 0.08,
-    hasta: 0.17,
+    desde: 0.1,
+    hasta: 0.26,
     titulo: "Arquitectura",
     texto: "Proyectamos viviendas y rehabilitamos edificios respetando lo que ya tienen de valor.",
   },
   {
-    desde: 0.25,
-    hasta: 0.35,
-    titulo: "Recorre tu casa antes de construirla",
-    texto: "Cada proyecto se presenta en 3D para que puedas pasear por él y cambiar lo que quieras sobre plano.",
-  },
-  {
-    desde: 0.49,
-    hasta: 0.575,
-    titulo: "Diseño de interiores",
-    texto: "Materiales, iluminación y mobiliario a medida, decididos antes de empezar la obra.",
+    desde: 0.44,
+    hasta: 0.58,
+    titulo: "Diseño",
+    texto: "Distribución, luz, materiales y mobiliario a medida, pensados contigo y cerrados antes de empezar la obra.",
   },
   {
     desde: 0.93,
