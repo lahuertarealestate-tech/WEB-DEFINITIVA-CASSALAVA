@@ -323,7 +323,7 @@ export default function Recorrido({ tramos }: { tramos: Tramo[] }) {
         {/* marcas: cada servicio se queda arriba a la izquierda al pasar su tramo */}
         <ul
           aria-hidden
-          className="pointer-events-none absolute left-5 top-[calc(72px+1.25rem)] flex flex-col gap-1 md:left-12 md:top-[calc(72px+2rem)]"
+          className="pointer-events-none absolute left-5 top-[calc(72px+1.25rem)] flex flex-col gap-1.5 md:left-12 md:top-[calc(72px+2rem)]"
         >
           {tramos.map((t, i) =>
             t.marca ? (
@@ -333,7 +333,7 @@ export default function Recorrido({ tramos }: { tramos: Tramo[] }) {
                   marcas.current[i] = el;
                 }}
                 style={{ opacity: 0 }}
-                className="flex items-center gap-3 text-[1.125rem] leading-snug text-cal will-change-transform md:text-[1.375rem]"
+                className="flex items-center gap-3 text-[1.375rem] leading-snug text-cal will-change-transform md:text-[1.75rem]"
               >
                 <span className="block h-px w-6 bg-cal/70 md:w-8" />
                 {t.titulo}
