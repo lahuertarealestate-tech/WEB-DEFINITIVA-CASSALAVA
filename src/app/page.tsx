@@ -11,38 +11,38 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
-// Textos sincronizados con el recorrido (0 = jardín, 0.3 = fachada, 0.5 = puerta, 0.75 = salón, 1 = final)
+// Textos sincronizados con el recorrido (0 = calle, 0.25 = portal, 0.4 = piso reformado, 0.5–0.9 = el piso se cae a trozos, 1 = sin reformar)
 const tramos: Tramo[] = [
   {
     desde: 0,
-    hasta: 0.09,
+    hasta: 0.07,
     principal: true,
     titulo: "Arquitectura, diseño y construcción",
     texto: "Proyectamos y construimos tu casa de principio a fin, con un solo equipo y un solo interlocutor.",
   },
   {
-    desde: 0.14,
-    hasta: 0.32,
+    desde: 0.1,
+    hasta: 0.2,
     titulo: "Arquitectura",
-    texto: "Dibujamos la casa a partir del terreno, la luz y la forma en que vas a vivir en ella.",
+    texto: "Proyectamos viviendas y rehabilitamos edificios respetando lo que ya tienen de valor.",
   },
   {
-    desde: 0.53,
-    hasta: 0.69,
-    titulo: "Diseño de interiores",
-    texto: "Materiales, iluminación y mobiliario a medida, decididos antes de empezar la obra.",
-  },
-  {
-    desde: 0.75,
-    hasta: 0.87,
+    desde: 0.24,
+    hasta: 0.32,
     titulo: "Recorre tu casa antes de construirla",
     texto: "Cada proyecto se presenta en 3D para que puedas pasear por él y cambiar lo que quieras sobre plano.",
+  },
+  {
+    desde: 0.36,
+    hasta: 0.47,
+    titulo: "Diseño de interiores",
+    texto: "Materiales, iluminación y mobiliario a medida, decididos antes de empezar la obra.",
   },
   {
     desde: 0.91,
     hasta: 1,
     titulo: "Construcción",
-    texto: "Equipo propio, presupuesto por partidas y un jefe de obra que te informa cada semana.",
+    texto: "Así estaba antes de la obra. Rehabilitamos pisos y edificios desde la estructura hasta el último acabado.",
   },
 ];
 

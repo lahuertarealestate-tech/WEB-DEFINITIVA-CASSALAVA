@@ -16,6 +16,7 @@ Opciones:
   --ancho N        ancho máximo de escritorio en px (por defecto 1920; nunca amplía)
   --calidad N      calidad WebP (por defecto 80)
   --desde S --hasta S   recortar el vídeo (segundos)
+  --lento A:B:F    dar F veces más scroll a los fotogramas A..B (p. ej. una transformación)
 
 Requiere ffmpeg, numpy, Pillow y opencv-python-headless.
 """
@@ -66,9 +67,12 @@ def movimiento(rutas):
     return np.convolve(np.pad(m, 2, mode="edge"), k, mode="valid")
 
 
-def curva_ritmo(m, ritmo):
+def curva_ritmo(m, ritmo, lentos=()):
     """Progreso de scroll (0..1) en el que aparece cada fotograma."""
     w = np.power(np.maximum(m, 1e-3), ritmo)
+    w = w / w.mean()
+    for ini, fin, factor in lentos:
+        w[ini:fin] = np.maximum(w[ini:fin], 1.0) * factor
     acum = np.concatenate([[0.0], np.cumsum(w)])
     return acum / acum[-1]
 
@@ -106,6 +110,7 @@ def main():
     ap.add_argument("--calidad", type=int, default=80)
     ap.add_argument("--desde", type=float, default=None)
     ap.add_argument("--hasta", type=float, default=None)
+    ap.add_argument("--lento", action="append", default=[])
     a = ap.parse_args()
 
     tmp = tempfile.mkdtemp(prefix="recorrido-")
@@ -113,7 +118,8 @@ def main():
         rutas = extraer(a.video, tmp, a.desde, a.hasta)
         print(f"{len(rutas)} fotogramas en el vídeo")
         indices = list(range(len(rutas)))
-        curva = curva_ritmo(movimiento(rutas), a.ritmo) if a.ritmo > 0 else np.linspace(0, 1, len(rutas))
+        lentos = [tuple(float(x) if i == 2 else int(x) for i, x in enumerate(t.split(":"))) for t in a.lento]
+        curva = curva_ritmo(movimiento(rutas), a.ritmo, lentos)
 
         we, he = guardar(rutas, indices, os.path.join(DEST, "escritorio"), a.ancho, a.calidad, False)
         wm, hm = guardar(rutas, indices, os.path.join(DEST, "movil"), a.ancho, a.calidad - 5, True)
@@ -129,7 +135,7 @@ def main():
             json.dump(manifest, f, indent=2)
             f.write("\n")
         # para colocar los textos: progreso de scroll cada 10 % del vídeo
-        print("progreso por fotograma (cada 24):", [f"{i}:{curva[i]:.2f}" for i in range(0, len(curva), 24)])
+        print("progreso por fotograma (cada 20):", [f"{i}:{curva[i]:.3f}" for i in range(0, len(curva), 20)])
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
 
