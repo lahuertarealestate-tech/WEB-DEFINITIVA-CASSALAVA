@@ -34,7 +34,6 @@ export const site = {
 
 export const navegacion = [
   { href: "/servicios", texto: "Servicios" },
-  { href: "/proyectos", texto: "Proyectos" },
   { href: "/nosotros", texto: "Nosotros" },
   { href: "/contacto", texto: "Contacto" },
 ] as const;

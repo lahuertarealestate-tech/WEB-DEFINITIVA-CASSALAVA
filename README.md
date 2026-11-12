@@ -10,14 +10,14 @@ Web de CASSALAVA (arquitectura, diseño y construcción). Next.js (App Router) +
 ## Estructura
 
 ```
-src/app/                 páginas (inicio, servicios, proyectos, nosotros, contacto, legales)
+src/app/                 páginas (inicio, servicios, nosotros, contacto, legales)
 src/app/api/contacto/    envío del formulario por email (Resend)
 src/components/recorrido Recorrido.tsx: canvas + precarga + textos sincronizados con el scroll
 src/lib/site.ts          datos de la empresa (contacto, datos fiscales, redes)
 src/lib/servicios.ts     textos de servicios
-src/lib/proyectos.ts     proyectos y sus fichas
 public/recorrido/        fotogramas del recorrido de la portada + manifest.json
-public/proyectos/        imágenes de los proyectos
+public/proyectos/        imágenes de servicios y nosotros
+public/images/           foto de Ignacio Lahuerta (ignacio-lahuerta.jpg)
 scripts/                 conversión de vídeo a fotogramas y render provisional
 ```
 
@@ -69,7 +69,6 @@ npm run dev
 ## Pendiente de contenido real
 
 - Datos de contacto y fiscales en `src/lib/site.ts` (ahora son inventados).
-- Proyectos e imágenes reales en `src/lib/proyectos.ts` y `public/proyectos/`.
 - Equipo y textos de `src/app/nosotros/page.tsx`.
 - Revisión legal de aviso legal, privacidad y cookies.
 - Logo definitivo (ahora es el nombre en EB Garamond).
