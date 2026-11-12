@@ -97,14 +97,37 @@ def main():
     ap.add_argument("--desde", type=int, required=True)
     ap.add_argument("--hasta", type=int, required=True)
     ap.add_argument("--salida", default=None, help="carpeta de salida (por defecto, sobrescribe)")
+    ap.add_argument("--placa", default=None, help="imagen que tapa el hueco (p. ej. un trozo de pared); si no, se dibuja una puerta")
+    ap.add_argument("--placa-quad", default=None, help="x0,y0,x1,y1 de la placa en el fotograma de referencia")
     a = ap.parse_args()
     out = a.salida or a.carpeta
     os.makedirs(out, exist_ok=True)
     ruta = lambda d, i: os.path.join(d, f"{i:05d}.png")
 
     x0, y0, x1, y1 = map(float, a.quad.split(","))
-    PW, PH = 840, 1400
-    plate = puerta(PW, PH)
+    if a.placa:
+        plate = cv2.imread(a.placa).astype(np.float32)
+        PH, PW = plate.shape[:2]
+        px0, py0, px1, py1 = map(float, a.placa_quad.split(","))
+    else:
+        PW, PH = 840, 1400
+        plate = puerta(PW, PH)
+        px0, py0, px1, py1 = x0, y0, x1, y1
+    pesq = np.float32([[px0, py0], [px1, py0], [px1, py1], [px0, py1]])
+    ref_img = cv2.imread(ruta(a.carpeta, a.ref)).astype(np.float32)
+
+    def bandas(q, forma):
+        """Franjas de pared a izquierda, derecha y encima de la placa (para igualar la luz)."""
+        m = np.zeros(forma, np.uint8)
+        xa, xb = q[:, 0].min(), q[:, 0].max()
+        ya, yb = q[:, 1].min(), q[:, 1].max()
+        d = max(3, int(0.08 * (xb - xa)))
+        cv2.rectangle(m, (int(xa - d), int(ya)), (int(xa - 1), int(yb - 0.1 * (yb - ya))), 255, -1)
+        cv2.rectangle(m, (int(xb + 1), int(ya)), (int(xb + d), int(yb - 0.1 * (yb - ya))), 255, -1)
+        cv2.rectangle(m, (int(xa), int(ya - d)), (int(xb), int(ya - 1)), 255, -1)
+        return m > 0
+
+    luz_ref = ref_img[bandas(pesq, ref_img.shape[:2])].mean(0)
     A = cv2.getPerspectiveTransform(
         np.float32([[0, 0], [PW, 0], [PW, PH], [0, PH]]),
         np.float32([[x0, y0], [x1, y0], [x1, y1], [x0, y1]]),
@@ -241,13 +264,19 @@ def main():
     for n, i in enumerate(idx):
         im = cv2.imread(ruta(a.carpeta, i)).astype(np.float32)
         h, w = im.shape[:2]
-        q = Qs[n]
+        Hq = cv2.getPerspectiveTransform(esq, Qs[n].astype(np.float32))
+        q = cv2.perspectiveTransform(pesq[None], Hq)[0]
         M = cv2.getPerspectiveTransform(np.float32([[0, 0], [PW, 0], [PW, PH], [0, PH]]), q.astype(np.float32))
         lado = np.linalg.norm(q[1] - q[0])
         pl = cv2.warpPerspective(plate, M, (w, h), flags=cv2.INTER_AREA if lado < PW else cv2.INTER_LINEAR)
         al = cv2.warpPerspective(np.ones((PH, PW), np.float32), M, (w, h), flags=cv2.INTER_LINEAR)
-        al = cv2.GaussianBlur(al, (0, 0), 0.6)[..., None]
+        al = cv2.GaussianBlur(al, (0, 0), max(0.6, lado / 140) if a.placa else 0.6)[..., None]
         pl = cv2.GaussianBlur(pl, (0, 0), 0.9)  # igualar la suavidad del vídeo
+        if a.placa:
+            # igualar la luz de la placa con la pared que la rodea en este fotograma
+            bm = bandas(q, (h, w))
+            if bm.sum() > 50:
+                pl *= (im[bm].mean(0) / np.maximum(luz_ref, 1))[None, None, :]
 
         # reflejo en el mármol: el hueco iluminado se reflejaba como una franja
         # clara; con la puerta cerrada el reflejo es oscuro. Se atenúa la franja
@@ -265,13 +294,17 @@ def main():
             if alr.ndim == 2:
                 alr = alr[..., None]
             t = np.linspace(0, 1, hh, dtype=np.float32)[:, None, None]
-            atenua = 0.58 * (1 - t) ** 0.6 + 0.1
-            fuerza = 0.45 * (1 - t) ** 1.2
+            if a.placa:  # una pared se refleja poco: solo se apaga el brillo del hueco
+                atenua = 0.42 * (1 - t) ** 0.6 + 0.06
+                fuerza = 0.22 * (1 - t) ** 1.2
+            else:
+                atenua = 0.58 * (1 - t) ** 0.6 + 0.1
+                fuerza = 0.45 * (1 - t) ** 1.2
             suelo = im[yb:yb + hh]
             im[yb:yb + hh] = suelo * (1 - atenua * alr) * (1 - fuerza * alr) + refl * fuerza * alr
 
         # grano para igualar el ruido del vídeo
-        grano = rng.normal(0, 2.2, pl.shape).astype(np.float32)
+        grano = rng.normal(0, 1.4 if a.placa else 2.2, pl.shape).astype(np.float32)
         im = im * (1 - al) + (pl + grano) * al
         cv2.imwrite(ruta(out, i), np.clip(im, 0, 255).astype(np.uint8))
     print("fotogramas retocados:", idx[0], "-", idx[-1])
