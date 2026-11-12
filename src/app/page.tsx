@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import ProyectoFicha from "@/components/ProyectoFicha";
 import Recorrido, { type Tramo } from "@/components/recorrido/Recorrido";
@@ -49,20 +50,50 @@ export default function Inicio() {
     <>
       <Recorrido tramos={tramos} />
 
-      {/* Presentación */}
-      <section className="mx-auto grid max-w-[92rem] gap-10 px-5 py-24 md:grid-cols-12 md:px-12 md:py-36">
-        <h2 className="text-titulo font-normal md:col-span-7 md:max-w-[20ch]">
-          Un estudio de arquitectura y una constructora en la misma empresa.
-        </h2>
-        <div className="md:col-span-4 md:col-start-9 md:pt-3">
-          <p>
-            Quien dibuja tu casa es quien la construye. Así el presupuesto se ajusta al proyecto desde el primer día y
-            nadie se pasa la responsabilidad cuando hay que tomar una decisión en obra.
-          </p>
-          <Link href="/nosotros" className="enlace mt-6 inline-block">
-            Conoce el estudio
+      {/* Quién soy. La foto está en public/images/ignacio-lahuerta.jpg:
+          para cambiarla basta con subir otra con el mismo nombre (formato vertical 4:5). */}
+      <section
+        aria-labelledby="titulo-fundador"
+        className="mx-auto grid max-w-[92rem] items-center gap-12 px-5 py-24 md:grid-cols-12 md:gap-10 md:px-12 md:py-36"
+      >
+        <div className="md:col-span-6">
+          <h2 id="titulo-fundador" className="text-titulo font-normal">
+            Ignacio Lahuerta
+          </h2>
+          <p className="mt-2 text-entradilla text-piedra">Arquitecto y fundador de CASSALAVA</p>
+          <div className="mt-8 max-w-[38rem] space-y-5 text-tinta/85">
+            <p>
+              Soy arquitecto y también dirijo Cassabela, mi inmobiliaria boutique en Madrid. Desde ahí he visto muchas
+              viviendas con un enorme potencial que sus propietarios no se atrevían a reformar. Tenían que coordinar a
+              un arquitecto, un interiorista y una constructora, y al final nadie respondía por el conjunto.
+            </p>
+            <p>
+              Fundé CASSALAVA para resolverlo. Proyectamos, diseñamos y construimos con un solo equipo, de modo que
+              quien dibuja tu casa es también quien la levanta. Tendrás un único interlocutor, un presupuesto cerrado
+              desde el principio y a alguien que responde de cada decisión, desde la primera visita hasta la entrega
+              de llaves.
+            </p>
+            <p>
+              Conocer el mercado inmobiliario me permite ver lo que una vivienda puede llegar a ser antes de tocarla, y
+              saber qué reformas aportan valor de verdad. Con ese criterio trabajamos en cada proyecto en Madrid.
+            </p>
+          </div>
+          <p className="mt-8 text-entradilla italic">Si tienes una casa que transformar, me encantará conocerla.</p>
+          <Link href="/contacto" className="enlace mt-6 inline-block">
+            Cuéntame tu proyecto
           </Link>
         </div>
+        <figure className="md:col-span-5 md:col-start-8">
+          <div className="relative aspect-[4/5] overflow-hidden bg-yeso">
+            <Image
+              src="/images/ignacio-lahuerta.jpg"
+              alt="Ignacio Lahuerta, arquitecto y fundador de CASSALAVA"
+              fill
+              sizes="(min-width: 768px) 40vw, 100vw"
+              className="object-cover"
+            />
+          </div>
+        </figure>
       </section>
 
       {/* Servicios */}
