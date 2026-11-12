@@ -7,8 +7,9 @@ type Estado = { tipo: "inicial" } | { tipo: "enviando" } | { tipo: "enviado" } |
 
 const tipos = ["Obra nueva", "Reforma integral", "Ampliación", "Diseño de interiores", "Otro"];
 
+// Todo en formas rectas: cajas con borde, sin esquinas redondeadas ni círculos
 const campo =
-  "mt-2 block w-full border-0 border-b border-tinta/30 bg-transparent px-0 py-2 text-[1.25rem] text-tinta placeholder:text-tinta/35 focus:border-granate focus:outline-none focus:ring-0";
+  "mt-2 block w-full rounded-none border border-tinta/25 bg-cal px-4 py-3 text-[1.2rem] text-tinta placeholder:text-tinta/35 focus:border-granate focus:outline-none focus:ring-1 focus:ring-granate";
 
 export default function FormularioContacto() {
   const [estado, setEstado] = useState<Estado>({ tipo: "inicial" });
@@ -73,7 +74,7 @@ export default function FormularioContacto() {
           {tipos.map((t, i) => (
             <label key={t} className="cursor-pointer">
               <input type="radio" name="tipo" value={t} defaultChecked={i === 0} className="peer sr-only" />
-              <span className="inline-block border border-tinta/25 px-4 py-1.5 transition-colors peer-checked:border-granate peer-checked:bg-granate peer-checked:text-cal peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-granate">
+              <span className="inline-block rounded-none border border-tinta/25 px-4 py-2 transition-colors peer-checked:border-granate peer-checked:bg-granate peer-checked:text-cal peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-granate">
                 {t}
               </span>
             </label>
@@ -101,7 +102,12 @@ export default function FormularioContacto() {
       </div>
 
       <label className="flex items-start gap-3 text-[1.0625rem]">
-        <input name="privacidad" type="checkbox" required className="mt-1.5 size-4 accent-granate" />
+        <input
+          name="privacidad"
+          type="checkbox"
+          required
+          className="mt-1 size-5 shrink-0 cursor-pointer appearance-none rounded-none border border-tinta/40 bg-cal bg-center bg-no-repeat checked:border-granate checked:bg-granate checked:bg-[url('data:image/svg+xml;utf8,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2016%2016%22%3E%3Cpath%20d=%22M3.5%208.5l3%203%206-7%22%20fill=%22none%22%20stroke=%22%23fffff7%22%20stroke-width=%222%22/%3E%3C/svg%3E')] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-granate"
+        />
         <span>
           He leído la{" "}
           <Link href="/privacidad" className="enlace" target="_blank">
@@ -120,7 +126,7 @@ export default function FormularioContacto() {
       <button
         type="submit"
         disabled={estado.tipo === "enviando"}
-        className="bg-granate px-8 py-3.5 text-[1.2rem] text-cal transition-colors hover:bg-granate-oscuro disabled:opacity-60"
+        className="rounded-none bg-granate px-8 py-3.5 text-[1.2rem] text-cal transition-colors hover:bg-granate-oscuro disabled:opacity-60"
       >
         {estado.tipo === "enviando" ? "Enviando…" : "Enviar mensaje"}
       </button>

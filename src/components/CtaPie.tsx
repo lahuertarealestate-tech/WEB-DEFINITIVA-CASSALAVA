@@ -3,9 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-// Llamada a la acción del pie. En la página de contacto sobra.
+// Llamada a la acción del pie. Sobra en contacto y en la portada, que ya acaba con el formulario.
 export default function CtaPie() {
-  if (usePathname() === "/contacto") return null;
+  const ruta = usePathname();
+  if (ruta === "/contacto" || ruta === "/") return null;
   return (
     <div className="mb-20">
       <p className="max-w-[18ch] text-titulo">¿Tienes un terreno o una casa que transformar?</p>
