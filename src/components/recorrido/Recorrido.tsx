@@ -318,22 +318,26 @@ export default function Recorrido({ tramos }: { tramos: Tramo[] }) {
 
       {!oculto && (
         <div
-          role="status"
-          aria-live="polite"
-          aria-label={`Cargando el recorrido: ${porcentaje} por ciento`}
-          className={`precarga fixed inset-0 z-[60] flex flex-col items-center justify-center bg-granate text-cal transition-opacity duration-700 ease-[var(--ease-suave)] ${
+          className={`precarga fixed inset-0 z-[60] flex items-center justify-center bg-granate text-cal transition-opacity duration-700 ease-[var(--ease-suave)] ${
             listo ? "pointer-events-none opacity-0" : "opacity-100"
           }`}
         >
-          <p className="logo text-3xl md:text-5xl">CASSALAVA</p>
-          <p className="mt-6 text-2xl text-cal/80 [font-variant-numeric:oldstyle-nums_tabular-nums]" aria-hidden>
-            {porcentaje} %
-          </p>
-          <div className="absolute bottom-0 left-0 h-[3px] w-full bg-cal/15">
+          {/* el logo y la línea comparten ancho: la línea se llena bajo el nombre */}
+          <div className="inline-flex flex-col items-stretch">
+            <p className="logo -mr-[0.2em] text-3xl md:text-5xl">CASSALAVA</p>
             <div
-              className="h-full origin-left bg-cal transition-transform duration-300"
-              style={{ transform: `scaleX(${porcentaje / 100})` }}
-            />
+              role="progressbar"
+              aria-label="Cargando el recorrido"
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-valuenow={porcentaje}
+              className="mt-6 h-px w-full overflow-hidden bg-cal/20 md:mt-8"
+            >
+              <div
+                className="h-full origin-left bg-cal transition-transform duration-500 ease-out"
+                style={{ transform: `scaleX(${porcentaje / 100})` }}
+              />
+            </div>
           </div>
         </div>
       )}
