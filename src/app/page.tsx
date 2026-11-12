@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
-// Textos sincronizados con el recorrido (0 = calle, 0.25 = portal, 0.4 = piso reformado, 0.5–0.9 = el piso se cae a trozos, 1 = sin reformar)
+// Textos sincronizados con el recorrido (0 = calle, 0.25 = portal, 0.4 = piso reformado, 0.52–1 = el piso se derrumba hasta quedar en obra)
 const tramos: Tramo[] = [
   {
     desde: 0,
@@ -39,10 +39,10 @@ const tramos: Tramo[] = [
     texto: "Materiales, iluminación y mobiliario a medida, decididos antes de empezar la obra.",
   },
   {
-    desde: 0.91,
+    desde: 0.93,
     hasta: 1,
     titulo: "Construcción",
-    texto: "Así estaba antes de la obra. Rehabilitamos pisos y edificios desde la estructura hasta el último acabado.",
+    texto: "Demolemos, reforzamos y reconstruimos con equipo propio, de la estructura al último acabado.",
   },
 ];
 
