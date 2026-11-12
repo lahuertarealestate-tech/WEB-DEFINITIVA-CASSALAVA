@@ -73,36 +73,6 @@ export const proyectos: Proyecto[] = [
     portada: "/proyectos/villa-terraza.webp",
     galeria: ["/proyectos/villa-entrada.webp", "/proyectos/villa-salon.webp"],
   },
-  {
-    slug: "villa-voladizo",
-    titulo: "Villa del voladizo",
-    lugar: "Toledo",
-    anio: 2023,
-    superficie: "280 m²",
-    servicios: ["Arquitectura", "Construcción"],
-    estado: "Terminado",
-    resumen: "Casa en ladera con una planta alta que vuela seis metros sobre el acceso.",
-    descripcion: [
-      "El voladizo resuelve a la vez la sombra de la entrada y las vistas de los dormitorios. Las lamas de madera filtran el sol de poniente.",
-    ],
-    portada: "/proyectos/villa-voladizo.webp",
-    galeria: ["/proyectos/villa-entrada.webp"],
-  },
-  {
-    slug: "ampliacion-en-obra",
-    titulo: "Ampliación en curso",
-    lugar: "Madrid",
-    anio: 2026,
-    superficie: "190 m²",
-    servicios: ["Arquitectura", "Construcción"],
-    estado: "En obra",
-    resumen: "Ampliación de dos plantas con estructura de hormigón. Actualmente en fase de estructura.",
-    descripcion: [
-      "La estructura de planta baja está terminada y se está levantando la segunda planta. La entrega está prevista para la primavera.",
-    ],
-    portada: "/proyectos/ampliacion-en-obra.webp",
-    galeria: ["/proyectos/villa-terraza.webp"],
-  },
 ];
 
 export function getProyecto(slug: string) {
