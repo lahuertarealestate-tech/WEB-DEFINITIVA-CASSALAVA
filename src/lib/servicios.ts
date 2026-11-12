@@ -7,6 +7,8 @@ export type Servicio = {
   imagen: string;
 };
 
+// Las fotos están en public/images/servicio-*.jpg: para cambiarlas basta con
+// subir otra con el mismo nombre desde GitHub (formato horizontal 4:3).
 export const servicios: Servicio[] = [
   {
     slug: "arquitectura",
@@ -22,7 +24,7 @@ export const servicios: Servicio[] = [
       "Tramitación de licencias",
       "Dirección de obra",
     ],
-    imagen: "/proyectos/villa-voladizo.webp",
+    imagen: "/images/servicio-arquitectura.jpg",
   },
   {
     slug: "diseno",
@@ -38,7 +40,7 @@ export const servicios: Servicio[] = [
       "Cocinas, baños y mobiliario a medida",
       "Decoración y estilismo final",
     ],
-    imagen: "/proyectos/villa-salon.webp",
+    imagen: "/images/servicio-diseno.jpg",
   },
   {
     slug: "construccion",
@@ -54,6 +56,6 @@ export const servicios: Servicio[] = [
       "Presupuesto cerrado por partidas",
       "Entrega con documentación y garantía",
     ],
-    imagen: "/proyectos/ampliacion-en-obra.webp",
+    imagen: "/images/servicio-construccion.jpg",
   },
 ];
