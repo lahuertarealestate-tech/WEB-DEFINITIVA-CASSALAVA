@@ -31,9 +31,11 @@ export default function ProyectoFicha({
           <span className="text-[1.5rem] leading-tight group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[0.2em]">
             {proyecto.titulo}
           </span>
-          <span className="cifras shrink-0 text-piedra">
-            {proyecto.lugar}, {proyecto.anio}
-          </span>
+          {(proyecto.lugar || proyecto.anio) && (
+            <span className="cifras shrink-0 text-piedra">
+              {[proyecto.lugar, proyecto.anio].filter(Boolean).join(", ")}
+            </span>
+          )}
         </figcaption>
       </figure>
     </Link>

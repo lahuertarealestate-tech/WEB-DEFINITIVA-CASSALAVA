@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: PageProps<"/proyectos/[slug]"
   const p = getProyecto(slug);
   if (!p) return {};
   return {
-    title: `${p.titulo}, ${p.lugar}`,
+    title: p.lugar ? `${p.titulo}, ${p.lugar}` : p.titulo,
     description: p.resumen,
     alternates: { canonical: `/proyectos/${p.slug}` },
     openGraph: { images: [{ url: p.portada, width: 1800, height: 1208 }] },
@@ -30,11 +30,11 @@ export default async function FichaProyecto({ params }: PageProps<"/proyectos/[s
 
   const datos = [
     ["Ubicación", p.lugar],
-    ["Año", String(p.anio)],
+    ["Año", p.anio ? String(p.anio) : undefined],
     ["Superficie", p.superficie],
     ["Estado", p.estado],
     ["Qué hicimos", p.servicios.join(", ")],
-  ];
+  ].filter((d): d is [string, string] => Boolean(d[1]));
 
   return (
     <article>

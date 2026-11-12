@@ -4,8 +4,9 @@
 export type Proyecto = {
   slug: string;
   titulo: string;
-  lugar: string;
-  anio: number;
+  /** Opcionales: si no se indican, no se muestran ni en la portada ni en la ficha */
+  lugar?: string;
+  anio?: number;
   superficie: string;
   servicios: string[];
   estado: "Terminado" | "En obra";
@@ -19,8 +20,6 @@ export const proyectos: Proyecto[] = [
   {
     slug: "casa-del-encinar",
     titulo: "Casa del Encinar",
-    lugar: "Segovia",
-    anio: 2025,
     superficie: "320 m²",
     servicios: ["Arquitectura", "Diseño de interiores", "Construcción"],
     estado: "Terminado",
@@ -35,8 +34,6 @@ export const proyectos: Proyecto[] = [
   {
     slug: "salon-mirador",
     titulo: "Salón mirador",
-    lugar: "Madrid",
-    anio: 2025,
     superficie: "140 m²",
     servicios: ["Diseño de interiores", "Construcción"],
     estado: "Terminado",
@@ -51,8 +48,6 @@ export const proyectos: Proyecto[] = [
   {
     slug: "cocina-isla",
     titulo: "Cocina con isla de mármol",
-    lugar: "Valencia",
-    anio: 2024,
     superficie: "45 m²",
     servicios: ["Diseño de interiores", "Construcción"],
     estado: "Terminado",
@@ -67,8 +62,6 @@ export const proyectos: Proyecto[] = [
   {
     slug: "terraza-piscina",
     titulo: "Terraza y piscina",
-    lugar: "Málaga",
-    anio: 2024,
     superficie: "210 m² exteriores",
     servicios: ["Arquitectura", "Construcción"],
     estado: "Terminado",
