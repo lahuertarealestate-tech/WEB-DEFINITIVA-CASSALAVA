@@ -51,10 +51,10 @@ render 3D por código que se usó antes de tenerlo.
 
 | Variable | Para qué |
 | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | URL pública (SEO, sitemap). Ej.: `https://www.cassalava.es` |
+| `NEXT_PUBLIC_SITE_URL` | URL pública (SEO, sitemap). Ej.: `https://www.cassalava.com` |
 | `RESEND_API_KEY` | Clave de [Resend](https://resend.com) para enviar el formulario |
 | `CONTACT_TO_EMAIL` | Email que recibe las consultas (se pueden poner varios separados por comas) |
-| `CONTACT_FROM_EMAIL` | Remitente con dominio verificado en Resend. Ej.: `Web CASSALAVA <web@cassalava.es>` |
+| `CONTACT_FROM_EMAIL` | Remitente con dominio verificado en Resend. Ej.: `Web CASSALAVA <web@cassalava.com>` |
 
 Sin `RESEND_API_KEY` la web funciona, pero el formulario responde que todavía no está activo.
 

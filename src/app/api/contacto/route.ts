@@ -4,8 +4,8 @@ import { Resend } from "resend";
   Envía por email el formulario de contacto usando Resend.
   Variables de entorno (Vercel → Settings → Environment Variables):
     RESEND_API_KEY      clave de API de Resend
-    CONTACT_TO_EMAIL    dónde se reciben los mensajes (p. ej. hola@cassalava.es)
-    CONTACT_FROM_EMAIL  remitente verificado en Resend (p. ej. "Web CASSALAVA <web@cassalava.es>")
+    CONTACT_TO_EMAIL    dónde se reciben los mensajes (p. ej. info@cassalava.com)
+    CONTACT_FROM_EMAIL  remitente verificado en Resend (p. ej. "Web CASSALAVA <web@cassalava.com>")
 */
 
 type Datos = {
