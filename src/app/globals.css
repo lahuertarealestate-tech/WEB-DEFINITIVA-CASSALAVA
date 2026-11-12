@@ -2,15 +2,16 @@
 
 /* ----------------------------------------------------------------------
    Identidad CASSALAVA
-   Granate #550000 como color propio, usado en campos grandes y no solo
+   Color principal: #FFFFF7 (fondo de la web). Color secundario: granate
+   #550000, usado en campos grandes y no solo
    como acento. Todo en Garamond (EB Garamond).
    ---------------------------------------------------------------------- */
 @theme {
-  --color-granate: #550000;
+  --color-granate: #550000; /* color secundario */
   --color-granate-oscuro: #3b0000;
   --color-granate-claro: #7a1f1f;
-  --color-cal: #f7f6f4;
-  --color-yeso: #ebe7e3;
+  --color-cal: #fffff7; /* color principal */
+  --color-yeso: #f3f2e6; /* variante algo más oscura del principal para separar secciones */
   --color-piedra: #8c837c;
   --color-tinta: #1d1716;
 
