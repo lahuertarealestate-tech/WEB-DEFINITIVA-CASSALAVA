@@ -39,6 +39,8 @@ export type Tramo = {
   /** El primer tramo es el titular de la página */
   principal?: boolean;
   lado?: "izquierda" | "derecha";
+  /** Al desaparecer, el título se queda como marca en la esquina superior izquierda */
+  marca?: boolean;
 };
 
 const MAX_ESPERA_MS = 20000;
@@ -53,6 +55,7 @@ export default function Recorrido({ tramos }: { tramos: Tramo[] }) {
   const seccion = useRef<HTMLElement>(null);
   const lienzo = useRef<HTMLCanvasElement>(null);
   const textos = useRef<(HTMLDivElement | null)[]>([]);
+  const marcas = useRef<(HTMLLIElement | null)[]>([]);
   const pista = useRef<HTMLDivElement>(null);
   const barra = useRef<HTMLDivElement>(null);
   const [porcentaje, setPorcentaje] = useState(0);
@@ -164,6 +167,13 @@ export default function Recorrido({ tramos }: { tramos: Tramo[] }) {
         el.style.opacity = String(o);
         el.style.transform = `translate3d(0, ${(1 - o) * 28}px, 0)`;
         el.style.visibility = o < 0.01 ? "hidden" : "visible";
+        // la marca aparece arriba a la izquierda mientras el texto grande se va
+        const mk = marcas.current[i];
+        if (mk) {
+          const m = suave(t.hasta - fundido * 0.6, t.hasta + fundido * 0.4, p);
+          mk.style.opacity = String(m);
+          mk.style.transform = `translate3d(0, ${(1 - m) * 14}px, 0)`;
+        }
       });
       if (pista.current) pista.current.style.opacity = String(1 - suave(0.01, 0.04, p));
       if (barra.current) barra.current.style.transform = `scaleY(${p})`;
@@ -310,7 +320,29 @@ export default function Recorrido({ tramos }: { tramos: Tramo[] }) {
           <span className="block h-8 w-px animate-pulse bg-cal/70" />
         </div>
 
-        {/* progreso del recorrido */}
+        {/* marcas: cada servicio se queda arriba a la izquierda al pasar su tramo */}
+        <ul
+          aria-hidden
+          className="pointer-events-none absolute left-5 top-[calc(72px+1.25rem)] flex flex-col gap-1 md:left-12 md:top-[calc(72px+2rem)]"
+        >
+          {tramos.map((t, i) =>
+            t.marca ? (
+              <li
+                key={t.titulo}
+                ref={(el) => {
+                  marcas.current[i] = el;
+                }}
+                style={{ opacity: 0 }}
+                className="flex items-center gap-3 text-[1.125rem] leading-snug text-cal will-change-transform md:text-[1.375rem]"
+              >
+                <span className="block h-px w-6 bg-cal/70 md:w-8" />
+                {t.titulo}
+              </li>
+            ) : null,
+          )}
+        </ul>
+
+                {/* progreso del recorrido */}
         <div aria-hidden className="absolute right-4 top-1/2 h-[30svh] w-px -translate-y-1/2 bg-cal/25 md:right-8">
           <div ref={barra} className="h-full w-full origin-top scale-y-0 bg-cal" />
         </div>

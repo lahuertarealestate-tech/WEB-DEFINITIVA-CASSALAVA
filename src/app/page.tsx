@@ -24,18 +24,21 @@ const tramos: Tramo[] = [
     desde: 0.1,
     hasta: 0.26,
     titulo: "Arquitectura",
+    marca: true,
     texto: "Proyectamos viviendas y rehabilitamos edificios respetando lo que ya tienen de valor.",
   },
   {
     desde: 0.44,
     hasta: 0.58,
     titulo: "Diseño",
+    marca: true,
     texto: "Distribución, luz, materiales y mobiliario a medida, pensados contigo y cerrados antes de empezar la obra.",
   },
   {
-    desde: 0.93,
-    hasta: 1,
+    desde: 0.9,
+    hasta: 0.975,
     titulo: "Construcción",
+    marca: true,
     texto: "Demolemos, reforzamos y reconstruimos con equipo propio, de la estructura al último acabado.",
   },
 ];
