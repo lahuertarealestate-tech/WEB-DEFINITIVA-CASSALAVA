@@ -170,9 +170,19 @@ export default function Recorrido({ tramos }: { tramos: Tramo[] }) {
         // la marca aparece arriba a la izquierda mientras el texto grande se va
         const mk = marcas.current[i];
         if (mk) {
-          const m = suave(t.hasta - fundido * 0.6, t.hasta + fundido * 0.4, p);
-          mk.style.opacity = String(m);
-          mk.style.transform = `translate3d(0, ${(1 - m) * 14}px, 0)`;
+          // primero aparece la raya y después las letras, una a una, al ritmo del scroll
+          const m = Math.min(1, Math.max(0, (p - (t.hasta - fundido * 0.6)) / (fundido * 2.2)));
+          mk.style.opacity = m > 0 ? "1" : "0";
+          const raya = mk.firstElementChild as HTMLElement | null;
+          if (raya) raya.style.transform = `scaleX(${Math.min(1, m * 4)})`;
+          const letras = mk.querySelectorAll<HTMLElement>("[data-letra]");
+          const n = letras.length;
+          const avance = Math.max(0, (m - 0.15) / 0.85) * (n + 2);
+          letras.forEach((l, k) => {
+            const o = Math.min(1, Math.max(0, avance - k));
+            l.style.opacity = String(o);
+            l.style.transform = `translate3d(0, ${(1 - o) * 0.25}em, 0)`;
+          });
         }
       });
       if (pista.current) pista.current.style.opacity = String(1 - suave(0.01, 0.04, p));
@@ -333,16 +343,22 @@ export default function Recorrido({ tramos }: { tramos: Tramo[] }) {
                   marcas.current[i] = el;
                 }}
                 style={{ opacity: 0 }}
-                className="flex items-center gap-4 text-[1.625rem] leading-snug text-cal will-change-transform md:text-[2.25rem]"
+                className="flex items-center gap-4 text-[1.625rem] font-bold leading-snug text-cal md:text-[2.25rem]"
               >
-                <span className="block h-px w-7 bg-cal/70 md:w-10" />
-                {t.titulo}
+                <span className="block h-[2px] w-7 origin-left bg-cal/80 md:w-10" style={{ transform: "scaleX(0)" }} />
+                <span className="whitespace-nowrap">
+                  {Array.from(t.titulo).map((letra, k) => (
+                    <span key={k} data-letra className="inline-block opacity-0">
+                      {letra === " " ? "\u00a0" : letra}
+                    </span>
+                  ))}
+                </span>
               </li>
             ) : null,
           )}
         </ul>
 
-                {/* progreso del recorrido */}
+        {/* progreso del recorrido */}
         <div aria-hidden className="absolute right-4 top-1/2 h-[30svh] w-px -translate-y-1/2 bg-cal/25 md:right-8">
           <div ref={barra} className="h-full w-full origin-top scale-y-0 bg-cal" />
         </div>
