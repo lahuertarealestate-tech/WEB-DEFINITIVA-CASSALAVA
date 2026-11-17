@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { getLenis } from "@/components/SmoothScroll";
+import { cormorant, inter } from "@/lib/fuentes-precarga";
 
 /*
   Recorrido por scroll: un <canvas> fijo pinta un fotograma distinto según
@@ -370,22 +371,35 @@ export default function Recorrido({ tramos }: { tramos: Tramo[] }) {
             listo ? "pointer-events-none opacity-0" : "opacity-100"
           }`}
         >
-          {/* el logo y la línea comparten ancho: la línea se llena bajo el nombre */}
-          <div className="inline-flex flex-col items-stretch">
-            <p className="logo -mr-[0.2em] text-3xl md:text-5xl">CASSALAVA</p>
+          {/* Tipos y tamaños como la precarga de Cassabela, con los colores de CASSALAVA */}
+          <div className="flex flex-col items-center px-5 text-center">
+            <p
+              className={`${cormorant.className} whitespace-nowrap text-[72px] leading-none tracking-[-0.05em] md:text-[128px]`}
+            >
+              CASSALAVA
+            </p>
             <div
               role="progressbar"
               aria-label="Cargando el recorrido"
               aria-valuemin={0}
               aria-valuemax={100}
               aria-valuenow={porcentaje}
-              className="mt-6 h-px w-full overflow-hidden bg-cal/20 md:mt-8"
+              className="mt-8 h-px w-[192px] overflow-hidden bg-cal/20"
             >
               <div
                 className="h-full origin-left bg-cal transition-transform duration-500 ease-out"
                 style={{ transform: `scaleX(${porcentaje / 100})` }}
               />
             </div>
+            <p
+              className={`${inter.className} mt-6 flex flex-wrap justify-center gap-x-4 gap-y-1 text-[14px] uppercase leading-5 tracking-[0.4em] text-cal/60`}
+            >
+              {["Arquitectura", "Diseño", "Construcción"].map((palabra, k) => (
+                <span key={palabra} className="precarga-palabra" style={{ animationDelay: `${0.3 + k * 0.45}s` }}>
+                  {palabra}
+                </span>
+              ))}
+            </p>
           </div>
         </div>
       )}

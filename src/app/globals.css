@@ -123,6 +123,22 @@ html.lenis body {
   text-underline-offset: 0.2em;
 }
 
+/* Precarga: las palabras de debajo del nombre aparecen una tras otra */
+.precarga-palabra {
+  opacity: 0;
+  animation: precarga-palabra 0.9s var(--ease-suave) forwards;
+}
+@keyframes precarga-palabra {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
