@@ -27,7 +27,7 @@ export default function Servicios() {
           aria-labelledby={`titulo-${s.slug}`}
           className={`scroll-mt-[72px] ${i % 2 === 1 ? "bg-granate text-cal" : "border-t border-tinta/10"}`}
         >
-          <div className="mx-auto grid max-w-[92rem] gap-10 px-5 py-20 md:grid-cols-12 md:gap-12 md:px-12 md:py-28">
+          <div className="mx-auto grid max-w-[92rem] gap-8 px-5 py-12 md:grid-cols-12 md:gap-8 md:px-12 md:py-16">
             <div className={`md:col-span-6 ${i % 2 === 1 ? "md:order-2 md:col-start-7" : ""}`}>
               <div className="relative aspect-[4/3] overflow-hidden bg-yeso">
                 <Image src={s.imagen} alt="" fill sizes="(min-width: 768px) 46vw, 100vw" className="object-cover" />
@@ -39,7 +39,7 @@ export default function Servicios() {
               </h2>
               <p className="mt-6 text-entradilla">{s.resumen}</p>
               <p className={`mt-5 ${i % 2 === 1 ? "text-cal/80" : "text-tinta/80"}`}>{s.texto}</p>
-              <h3 className={`mt-10 ${i % 2 === 1 ? "text-cal/65" : "text-piedra"}`}>Qué incluye</h3>
+              <h3 className={`mt-6 ${i % 2 === 1 ? "text-cal/65" : "text-piedra"}`}>Qué incluye</h3>
               <ul className={`mt-3 border-t ${i % 2 === 1 ? "border-cal/25" : "border-tinta/15"}`}>
                 {s.incluye.map((x) => (
                   <li key={x} className={`border-b py-3 ${i % 2 === 1 ? "border-cal/25" : "border-tinta/15"}`}>
@@ -53,11 +53,11 @@ export default function Servicios() {
       ))}
 
       <section aria-labelledby="titulo-proceso" className="border-t border-tinta/10 bg-yeso">
-        <div className="mx-auto max-w-[92rem] px-5 py-24 md:px-12 md:py-32">
+        <div className="mx-auto max-w-[92rem] px-5 py-14 md:px-12 md:py-20">
           <h2 id="titulo-proceso" className="text-titulo font-normal">
             Las cinco fases de un proyecto
           </h2>
-          <ol className="mt-14 grid gap-10 md:grid-cols-5 md:gap-8">
+          <ol className="mt-8 grid gap-10 md:grid-cols-5 md:gap-8">
             {proceso.map((p, i) => (
               <li key={p.titulo} className="border-t border-granate pt-5">
                 <span className="cifras text-[2.25rem] leading-none text-granate">{i + 1}</span>
@@ -66,7 +66,7 @@ export default function Servicios() {
               </li>
             ))}
           </ol>
-          <Link href="/contacto" className="enlace mt-14 inline-block text-entradilla">
+          <Link href="/contacto" className="enlace mt-8 inline-block text-entradilla">
             Cuéntanos tu proyecto
           </Link>
         </div>

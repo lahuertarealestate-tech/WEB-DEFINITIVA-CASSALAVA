@@ -8,7 +8,7 @@ export default function Footer() {
   const c = site.contacto;
   return (
     <footer className="bg-granate text-cal">
-      <div className="mx-auto max-w-[92rem] px-5 pb-10 pt-20 md:px-12 md:pt-28">
+      <div className="mx-auto max-w-[92rem] px-5 pb-10 pt-12 md:px-12 md:pt-16">
         <CtaPie />
 
         <div className="grid gap-10 border-t border-cal/20 pt-10 sm:grid-cols-2 lg:grid-cols-4">
@@ -69,7 +69,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-16 flex flex-col gap-3 text-base text-cal/65 md:flex-row md:items-center md:justify-between">
+        <div className="mt-10 flex flex-col gap-3 text-base text-cal/65 md:flex-row md:items-center md:justify-between">
           <p>© {site.legal.razonSocial}</p>
           <ul className="flex flex-wrap gap-x-6 gap-y-1">
             <li>

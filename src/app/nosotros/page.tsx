@@ -46,11 +46,11 @@ export default function Nosotros() {
         <Image src="/proyectos/pasillo-galeria.webp" alt="" fill sizes="100vw" className="object-cover" />
       </div>
 
-      <section aria-labelledby="titulo-principios" className="mx-auto max-w-[92rem] px-5 py-24 md:px-12 md:py-32">
+      <section aria-labelledby="titulo-principios" className="mx-auto max-w-[92rem] px-5 py-14 md:px-12 md:py-20">
         <h2 id="titulo-principios" className="text-titulo font-normal">
           Cómo entendemos el oficio
         </h2>
-        <div className="mt-14 grid gap-12 md:grid-cols-3 md:gap-10">
+        <div className="mt-8 grid gap-8 md:grid-cols-3 md:gap-10">
           {principios.map((p) => (
             <div key={p.titulo} className="border-t border-tinta/15 pt-6">
               <h3 className="text-[1.6rem] leading-tight">{p.titulo}</h3>
@@ -61,13 +61,13 @@ export default function Nosotros() {
       </section>
 
       <section aria-labelledby="titulo-equipo" className="bg-granate text-cal">
-        <div className="mx-auto max-w-[92rem] px-5 py-24 md:px-12 md:py-32">
+        <div className="mx-auto max-w-[92rem] px-5 py-14 md:px-12 md:py-20">
           <h2 id="titulo-equipo" className="text-titulo font-normal">
             Equipo
           </h2>
-          <ul className="mt-12 border-t border-cal/25">
+          <ul className="mt-8 border-t border-cal/25">
             {equipo.map((m, i) => (
-              <li key={i} className="grid gap-1 border-b border-cal/25 py-6 md:grid-cols-2 md:items-baseline">
+              <li key={i} className="grid gap-1 border-b border-cal/25 py-4 md:grid-cols-2 md:items-baseline">
                 <span className="text-[1.75rem] leading-tight">{m.nombre}</span>
                 <span className="text-cal/75">{m.cargo}</span>
               </li>

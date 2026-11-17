@@ -51,14 +51,14 @@ export default function Inicio() {
           para cambiarla basta con subir otra con el mismo nombre (formato vertical 4:5). */}
       <section
         aria-labelledby="titulo-fundador"
-        className="mx-auto grid max-w-[92rem] items-center gap-12 px-5 py-24 md:grid-cols-12 md:gap-10 md:px-12 md:py-36"
+        className="mx-auto grid max-w-[92rem] items-center gap-8 px-5 py-14 md:grid-cols-12 md:gap-10 md:px-12 md:py-20"
       >
         <div className="md:col-span-6">
           <h2 id="titulo-fundador" className="text-titulo font-normal">
             Ignacio Lahuerta
           </h2>
           <p className="mt-2 text-entradilla text-piedra">Arquitecto y fundador de CASSALAVA</p>
-          <div className="mt-8 max-w-[38rem] space-y-5 text-tinta/85">
+          <div className="mt-5 max-w-[38rem] space-y-4 text-tinta/85">
             <p>
               Soy arquitecto y también dirijo Cassabela, mi inmobiliaria boutique en Madrid. Desde ahí he visto muchas
               viviendas con un enorme potencial que sus propietarios no se atrevían a reformar. Tenían que coordinar a
@@ -75,8 +75,8 @@ export default function Inicio() {
               saber qué reformas aportan valor de verdad. Con ese criterio trabajamos en cada proyecto en Madrid.
             </p>
           </div>
-          <p className="mt-8 text-entradilla italic">Si tienes una casa que transformar, me encantará conocerla.</p>
-          <a href="#contacto" className="enlace mt-6 inline-block">
+          <p className="mt-5 text-entradilla italic">Si tienes una casa que transformar, me encantará conocerla.</p>
+          <a href="#contacto" className="enlace mt-4 inline-block">
             Cuéntame tu proyecto
           </a>
         </div>

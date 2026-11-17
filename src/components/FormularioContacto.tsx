@@ -58,7 +58,7 @@ export default function FormularioContacto() {
   }
 
   return (
-    <form onSubmit={enviar} className="space-y-8 text-granate">
+    <form onSubmit={enviar} className="space-y-6 text-granate">
       <div>
         <label htmlFor="f-tipo" className={etiqueta}>
           Tipo de proyecto

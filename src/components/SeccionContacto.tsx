@@ -12,9 +12,9 @@ export default function SeccionContacto({ como = "h2" }: { como?: "h1" | "h2" })
   const dato = `${cormorant.className} text-2xl font-normal text-granate transition-colors hover:text-granate/70`;
   return (
     <section id="contacto" aria-labelledby="titulo-contacto" className="scroll-mt-[72px] bg-cal text-granate">
-      <div className="mx-auto max-w-7xl px-6 py-24 md:px-8 md:py-32">
-        <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:gap-16">
-          <div className="flex flex-col justify-between gap-12 lg:col-span-5 lg:self-stretch">
+      <div className="mx-auto max-w-7xl px-6 py-14 md:px-8 md:py-20">
+        <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12 lg:gap-12">
+          <div className="flex flex-col justify-between gap-8 lg:col-span-5 lg:self-stretch">
             <div>
               <span
                 className={`${inter.className} mb-4 block text-[10px] font-bold uppercase tracking-[0.3em] text-granate/60 md:text-[11px]`}
