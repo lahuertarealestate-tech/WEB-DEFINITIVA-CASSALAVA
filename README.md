@@ -69,6 +69,6 @@ npm run dev
 ## Pendiente de contenido real
 
 - Datos de contacto y fiscales en `src/lib/site.ts` (ahora son inventados).
-- Equipo y textos de `src/app/nosotros/page.tsx`.
+- Textos de `src/app/nosotros/page.tsx`.
 - Revisión legal de aviso legal, privacidad y cookies.
 - Logo definitivo (ahora es el nombre en EB Garamond).

@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/nosotros" },
 };
 
-// ⚠️ Textos provisionales: sustituir por la historia y el equipo reales.
+// ⚠️ Textos provisionales: sustituir por la historia real.
 const principios = [
   {
     titulo: "Un solo responsable",
@@ -25,13 +25,6 @@ const principios = [
     texto:
       "El presupuesto va por partidas y se actualiza con cada decisión. Sabes en todo momento cuánto cuesta lo que estás eligiendo.",
   },
-];
-
-const equipo = [
-  { nombre: "Nombre Apellido", cargo: "Arquitecta, dirección de proyectos" },
-  { nombre: "Nombre Apellido", cargo: "Interiorismo" },
-  { nombre: "Nombre Apellido", cargo: "Jefe de obra" },
-  { nombre: "Nombre Apellido", cargo: "Presupuestos y compras" },
 ];
 
 export default function Nosotros() {
@@ -60,21 +53,6 @@ export default function Nosotros() {
         </div>
       </section>
 
-      <section aria-labelledby="titulo-equipo" className="bg-granate text-cal">
-        <div className="mx-auto max-w-[92rem] px-5 py-14 md:px-12 md:py-20">
-          <h2 id="titulo-equipo" className="text-titulo font-normal">
-            Equipo
-          </h2>
-          <ul className="mt-8 border-t border-cal/25">
-            {equipo.map((m, i) => (
-              <li key={i} className="grid gap-1 border-b border-cal/25 py-4 md:grid-cols-2 md:items-baseline">
-                <span className="text-[1.75rem] leading-tight">{m.nombre}</span>
-                <span className="text-cal/75">{m.cargo}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
     </>
   );
 }
