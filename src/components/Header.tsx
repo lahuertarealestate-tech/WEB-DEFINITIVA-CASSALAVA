@@ -35,12 +35,21 @@ export default function Header() {
         claro ? "sobre-oscuro bg-transparent text-cal" : "border-b border-tinta/10 bg-fondo/95 text-tinta backdrop-blur"
       }`}
     >
-      <div className="mx-auto flex h-[72px] max-w-[92rem] items-center justify-between px-5 md:px-12">
-        <Link href="/" className="logo text-[1.35rem] leading-none md:text-[1.5rem]" aria-label="CASSALAVA, inicio">
+      <div className="relative mx-auto flex h-[72px] max-w-[92rem] items-center justify-between px-5 md:px-12">
+        {/* En el home, sobre el vídeo, el logo va centrado y más grande */}
+        <Link
+          href="/"
+          aria-label="CASSALAVA, inicio"
+          className={`logo leading-none transition-[font-size] duration-500 ${
+            claro
+              ? "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 -mr-[0.2em] text-[1.75rem] md:text-[2.5rem]"
+              : "text-[1.35rem] md:text-[1.5rem]"
+          }`}
+        >
           CASSALAVA
         </Link>
 
-        <nav aria-label="Principal" className="hidden md:block">
+        <nav aria-label="Principal" className="ml-auto hidden md:block">
           <ul className="flex items-center gap-9 text-[1.125rem]">
             {navegacion.map((n) => {
               const activo = pathname.startsWith(n.href);
@@ -61,7 +70,7 @@ export default function Header() {
 
         <button
           type="button"
-          className="-mr-2 p-2 text-[1.125rem] md:hidden"
+          className="-mr-2 ml-auto p-2 text-[1.125rem] md:hidden"
           aria-expanded={abierto}
           aria-controls="menu-movil"
           onClick={() => setMenuEn(abierto ? null : pathname)}
