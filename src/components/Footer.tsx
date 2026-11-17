@@ -14,7 +14,7 @@ export default function Footer() {
         <div className="grid gap-10 border-t border-cal/20 pt-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <p className="logo text-xl">CASSALAVA</p>
-            <p className="mt-3 max-w-[28ch] text-cal/75">Arquitectura, diseño y construcción.</p>
+            <p className="mt-3 max-w-[28ch] text-left text-cal/75">Arquitectura, diseño y construcción.</p>
           </div>
           <div>
             <h2 className="text-cal/60">Contacto</h2>

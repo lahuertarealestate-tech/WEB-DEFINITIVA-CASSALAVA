@@ -95,12 +95,14 @@ html.lenis body {
 
 /* Todos los párrafos justificados; la partición de palabras evita huecos
    grandes entre palabras en columnas estrechas (móvil) */
-p,
-li,
-address {
-  text-align: justify;
-  hyphens: auto;
-  -webkit-hyphens: auto;
+@layer base {
+  p,
+  li,
+  address {
+    text-align: justify;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+  }
 }
 
 /* Enlace subrayado de texto */

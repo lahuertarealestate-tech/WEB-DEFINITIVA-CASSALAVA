@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { getLenis } from "@/components/SmoothScroll";
-import { cormorant, inter } from "@/lib/fuentes-precarga";
+import { cormorant, inter } from "@/lib/fuentes";
 
 /*
   Recorrido por scroll: un <canvas> fijo pinta un fotograma distinto según

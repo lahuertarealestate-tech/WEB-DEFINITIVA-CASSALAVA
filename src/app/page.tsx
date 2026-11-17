@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import FormularioContacto from "@/components/FormularioContacto";
+import SeccionContacto from "@/components/SeccionContacto";
 import Recorrido, { type Tramo } from "@/components/recorrido/Recorrido";
 
 export const metadata: Metadata = {
@@ -94,25 +94,7 @@ export default function Inicio() {
       </section>
 
       {/* Contacto: lo único que hay debajo de la presentación */}
-      <section
-        id="contacto"
-        aria-labelledby="titulo-contacto"
-        className="scroll-mt-[72px] border-t border-tinta/10"
-      >
-        <div className="mx-auto grid max-w-[92rem] gap-12 px-5 py-24 md:grid-cols-12 md:gap-10 md:px-12 md:py-32">
-          <div className="md:col-span-4">
-            <h2 id="titulo-contacto" className="text-titulo font-normal">
-              Cuéntanos tu proyecto
-            </h2>
-            <p className="mt-6 max-w-[28rem] text-tinta/80">
-              Te respondemos en un día laborable para concertar una primera visita, sin compromiso.
-            </p>
-          </div>
-          <div className="md:col-span-7 md:col-start-6">
-            <FormularioContacto />
-          </div>
-        </div>
-      </section>
+      <SeccionContacto />
     </>
   );
 }
