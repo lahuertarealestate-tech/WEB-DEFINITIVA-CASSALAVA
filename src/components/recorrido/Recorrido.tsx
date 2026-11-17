@@ -343,7 +343,7 @@ export default function Recorrido({ tramos }: { tramos: Tramo[] }) {
                   marcas.current[i] = el;
                 }}
                 style={{ opacity: 0 }}
-                className="flex items-center gap-4 text-[1.625rem] font-bold leading-snug text-cal md:text-[2.25rem]"
+                className="flex items-center gap-4 text-[1.625rem] leading-snug text-cal md:text-[2.25rem]"
               >
                 <span className="block h-[2px] w-7 origin-left bg-cal/80 md:w-10" style={{ transform: "scaleX(0)" }} />
                 <span className="whitespace-nowrap">
