@@ -8,7 +8,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
-// Textos sincronizados con el recorrido (0 = calle, 0.19 = vestíbulo, 0.24–0.42 = escalera, 0.5 = puerta del piso, 0.59–0.9 = derrumbe)
+// Textos sincronizados con el recorrido (0–0.24 = acercamiento a la fachada, 0.24–0.38 = entrada por la ventana al salón en ruinas,
+// 0.38–0.68 = de ruinas a obra, 0.68–1 = de obra al salón reformado)
 const tramos: Tramo[] = [
   {
     desde: 0,
@@ -18,22 +19,22 @@ const tramos: Tramo[] = [
     texto: "Proyectamos y construimos tu casa de principio a fin, con un solo equipo y un solo interlocutor.",
   },
   {
-    desde: 0.1,
-    hasta: 0.26,
+    desde: 0.08,
+    hasta: 0.21,
     titulo: "Arquitectura",
     marca: true,
     texto: "Proyectamos viviendas y rehabilitamos edificios respetando lo que ya tienen de valor.",
   },
   {
-    desde: 0.44,
-    hasta: 0.58,
+    desde: 0.28,
+    hasta: 0.4,
     titulo: "Diseño",
     marca: true,
     texto: "Distribución, luz, materiales y mobiliario a medida, pensados contigo y cerrados antes de empezar la obra.",
   },
   {
-    desde: 0.9,
-    hasta: 0.975,
+    desde: 0.48,
+    hasta: 0.66,
     titulo: "Construcción",
     marca: true,
     texto: "Demolemos, reforzamos y reconstruimos con equipo propio, de la estructura al último acabado.",
