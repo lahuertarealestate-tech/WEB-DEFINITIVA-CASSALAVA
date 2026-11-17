@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import CabeceraPagina from "@/components/CabeceraPagina";
-import { proceso } from "@/lib/proceso";
 import { servicios } from "@/lib/servicios";
 
 export const metadata: Metadata = {
@@ -52,25 +50,6 @@ export default function Servicios() {
         </section>
       ))}
 
-      <section aria-labelledby="titulo-proceso" className="border-t border-tinta/10 bg-yeso">
-        <div className="mx-auto max-w-[92rem] px-5 py-14 md:px-12 md:py-20">
-          <h2 id="titulo-proceso" className="text-titulo font-normal">
-            Las cinco fases de un proyecto
-          </h2>
-          <ol className="mt-8 grid gap-10 md:grid-cols-5 md:gap-8">
-            {proceso.map((p, i) => (
-              <li key={p.titulo} className="border-t border-granate pt-5">
-                <span className="cifras text-[2.25rem] leading-none text-granate">{i + 1}</span>
-                <h3 className="mt-4 text-[1.4rem] leading-tight">{p.titulo}</h3>
-                <p className="mt-3 text-tinta/75">{p.texto}</p>
-              </li>
-            ))}
-          </ol>
-          <Link href="/contacto" className="enlace mt-8 inline-block text-entradilla">
-            Cuéntanos tu proyecto
-          </Link>
-        </div>
-      </section>
     </>
   );
 }
