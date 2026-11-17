@@ -15,7 +15,8 @@ const tramos: Tramo[] = [
     desde: 0,
     hasta: 0.06,
     principal: true,
-    titulo: "Arquitectura, diseño y construcción",
+    // "\n" marca el salto de línea: "diseño y construcción" siempre en la misma línea
+    titulo: "Arquitectura,\ndiseño y construcción",
     texto: "Proyectamos y construimos tu casa de principio a fin, con un solo equipo y un solo interlocutor.",
   },
   {

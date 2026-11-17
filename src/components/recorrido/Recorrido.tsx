@@ -309,11 +309,15 @@ export default function Recorrido({ tramos }: { tramos: Tramo[] }) {
               <Titulo
                 className={
                   t.principal
-                    ? "text-portada font-normal tracking-[-0.015em] text-balance"
+                    ? "text-[2.25rem] font-normal leading-none tracking-[-0.015em] sm:text-portada"
                     : "text-titulo font-normal tracking-[-0.01em] text-balance"
                 }
               >
-                {t.titulo}
+                {t.titulo.split("\n").map((linea) => (
+                  <span key={linea} className="block whitespace-nowrap">
+                    {linea}
+                  </span>
+                ))}
               </Titulo>
               {t.texto && (
                 <p className="mt-4 max-w-[34rem] text-entradilla text-cal/85 md:mt-5">{t.texto}</p>
