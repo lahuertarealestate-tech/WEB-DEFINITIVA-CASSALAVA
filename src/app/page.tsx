@@ -8,34 +8,35 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
-// Textos sincronizados con el recorrido (0–0.26 = acercamiento a la fachada, 0.26–0.42 = entrada por la ventana del torreón
-// al salón de esquina en ruinas, 0.42–0.70 = de ruinas a obra, 0.70–1 = de obra al salón reformado)
+// Textos sincronizados con el recorrido (0–0.13 = acercamiento a la fachada, 0.13–0.21 = entrada por la ventana del torreón,
+// 0.21–0.48 = reforma del salón, 0.48–0.60 = giro hacia la puerta y paso al pasillo, 0.60–0.67 = reforma del pasillo,
+// 0.67–0.74 = recorrido hasta la cocina, 0.74–1 = reforma de la cocina)
 const tramos: Tramo[] = [
   {
     desde: 0,
-    hasta: 0.06,
+    hasta: 0.03,
     principal: true,
     // "\n" marca el salto de línea: "diseño y construcción" siempre en la misma línea
     titulo: "Arquitectura,\ndiseño y construcción",
     texto: "Proyectamos y construimos tu casa de principio a fin, con un solo equipo y un solo interlocutor.",
   },
   {
-    desde: 0.08,
-    hasta: 0.21,
+    desde: 0.04,
+    hasta: 0.105,
     titulo: "Arquitectura",
     marca: true,
     texto: "Proyectamos viviendas y rehabilitamos edificios respetando lo que ya tienen de valor.",
   },
   {
-    desde: 0.28,
-    hasta: 0.4,
+    desde: 0.14,
+    hasta: 0.2,
     titulo: "Diseño",
     marca: true,
     texto: "Distribución, luz, materiales y mobiliario a medida, pensados contigo y cerrados antes de empezar la obra.",
   },
   {
-    desde: 0.48,
-    hasta: 0.66,
+    desde: 0.238,
+    hasta: 0.32,
     titulo: "Construcción",
     marca: true,
     texto: "Demolemos, reforzamos y reconstruimos con equipo propio, de la estructura al último acabado.",

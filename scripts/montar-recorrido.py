@@ -77,6 +77,9 @@ def main():
                     nxt, _ = clip[j]
                     imagenes[-k + j] = ((prev, nxt, t), pp)
                 clip = clip[k:]
+            elif imagenes:
+                # sin fundido: el clip empieza en el último fotograma del anterior, así que se quita el repetido
+                clip = clip[1:]
             imagenes += clip
             print(f"clip {n + 1}: {len(idx)} fotogramas, {float(parte):.0%} del scroll")
 

@@ -158,7 +158,8 @@ export default function Recorrido({ tramos }: { tramos: Tramo[] }) {
     };
 
     const actualizarTextos = (p: number) => {
-      const fundido = 0.025;
+      // fracción del recorrido que dura cada fundido de texto (el recorrido mide ~1500vh: ≈19vh de scroll)
+      const fundido = 0.0125;
       tramos.forEach((t, i) => {
         const el = textos.current[i];
         if (!el) return;
@@ -232,6 +233,9 @@ export default function Recorrido({ tramos }: { tramos: Tramo[] }) {
           for (let i = 0; i < total; i += paso) if (!orden.includes(i)) orden.push(i);
         }
 
+        // Se deja entrar en cuanto está cargado uno de cada 4 fotogramas (el recorrido ya se ve completo);
+        // el resto sigue descargándose en segundo plano y se pinta el vecino más cercano mientras tanto.
+        const gruesos = Math.ceil(total / 4);
         let hechos = 0;
         let siguiente = 0;
         const cargar = async (): Promise<void> => {
@@ -251,7 +255,8 @@ export default function Recorrido({ tramos }: { tramos: Tramo[] }) {
               /* si un fotograma falla se usa el vecino más cercano */
             }
             hechos++;
-            setPorcentaje(Math.round((hechos / total) * 100));
+            if (hechos <= gruesos) setPorcentaje(Math.round((hechos / gruesos) * 100));
+            if (hechos === gruesos && !cancelado) desbloquear();
           }
         };
         Promise.all(Array.from({ length: CONCURRENCIA }, cargar)).then(() => {
@@ -278,7 +283,7 @@ export default function Recorrido({ tramos }: { tramos: Tramo[] }) {
       id="recorrido"
       ref={seccion}
       aria-label="Recorrido por una vivienda: de la fachada al interior y a la obra"
-      className="relative h-[520vh] md:h-[720vh]"
+      className="relative h-[1080vh] md:h-[1500vh]"
     >
       <div className="sobre-oscuro sticky top-0 h-[100svh] w-full overflow-hidden bg-tinta text-cal">
         <canvas ref={lienzo} aria-hidden className="absolute inset-0 h-full w-full" />
