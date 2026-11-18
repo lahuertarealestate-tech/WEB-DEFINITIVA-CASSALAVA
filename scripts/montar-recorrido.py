@@ -13,8 +13,9 @@ El script:
 
     python3 scripts/montar-recorrido.py clipA.mp4:180:0.25 clipB.mp4:178:0.12 ...
 
-  formato de cada clip:  ruta:último_fotograma:parte_del_scroll[:paso]
-  (paso opcional por clip; si no se indica, se usa --paso)
+  formato de cada clip:  ruta:último_fotograma:parte_del_scroll[:paso[:f]]
+  (paso opcional por clip; si no se indica, se usa --paso. "f" reparte el scroll del clip según el
+  movimiento de cámara en vez de según cuánto cambia la imagen)
 """
 
 import argparse
@@ -49,6 +50,7 @@ def main():
     ap.add_argument("--fundido", type=int, default=6, help="fotogramas de fundido en cada unión")
     ap.add_argument("--ancho", type=int, default=1440)
     ap.add_argument("--calidad", type=int, default=70)
+    ap.add_argument("--suavizar", type=float, default=0, help="suavizado del ritmo (en fotogramas)")
     a = ap.parse_args()
 
     tmp = tempfile.mkdtemp(prefix="montaje-")
@@ -57,10 +59,22 @@ def main():
         for n, spec in enumerate(a.clips):
             partes = spec.split(":")
             ruta, ultimo, parte = partes[:3]
-            paso = int(partes[3]) if len(partes) > 3 else a.paso
+            paso = int(partes[3]) if len(partes) > 3 and partes[3] else a.paso
+            # "f": clip con movimiento de cámara → el scroll se reparte según cuánto se mueve la imagen
+            # (flujo óptico), así la cámara avanza a velocidad constante aunque en el vídeo acelere
+            flujo = len(partes) > 4 and partes[4] == "f"
             fr = extraer(ruta, os.path.join(tmp, f"c{n}"))[: int(ultimo)]
             g = [pequeno(f) for f in fr]
-            dif = np.array([0.0] + [np.abs(g[i] - g[i - 1]).mean() for i in range(1, len(g))])
+            if flujo:
+                import cv2
+
+                g8 = [x.astype(np.uint8) for x in g]
+                dif = np.array([0.0] + [
+                    float(np.median(np.linalg.norm(cv2.calcOpticalFlowFarneback(g8[i - 1], g8[i], None, 0.5, 4, 15, 3, 5, 1.2, 0), axis=2)))
+                    for i in range(1, len(g8))
+                ])
+            else:
+                dif = np.array([0.0] + [np.abs(g[i] - g[i - 1]).mean() for i in range(1, len(g))])
             idx = list(range(0, len(fr), paso))
             if idx[-1] != len(fr) - 1:
                 idx.append(len(fr) - 1)
@@ -84,6 +98,12 @@ def main():
             print(f"clip {n + 1}: {len(idx)} fotogramas, {float(parte):.0%} del scroll")
 
         pesos = np.array([p for _, p in imagenes])
+        if a.suavizar > 0:
+            # suaviza los cambios bruscos de velocidad (por ejemplo, en las uniones entre clips)
+            r = int(a.suavizar * 3)
+            nucleo = np.exp(-0.5 * (np.arange(-r, r + 1) / a.suavizar) ** 2)
+            nucleo /= nucleo.sum()
+            pesos[1:] = np.convolve(np.pad(pesos[1:], r, mode="edge"), nucleo, mode="valid")
         curva = np.concatenate([[0.0], np.cumsum(pesos[1:])])
         curva /= curva[-1]
 
