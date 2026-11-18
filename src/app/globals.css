@@ -159,3 +159,17 @@ html.lenis body {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Recorrido del home a pantalla completa en móvil.
+   El bloque fijo mide la pantalla "grande" (con la barra del navegador escondida), así no queda
+   una franja vacía abajo cuando la barra se oculta al hacer scroll. --barra-movil es lo que tapa la
+   barra cuando está visible: se suma a las posiciones de abajo para que los textos no queden debajo. */
+.alto-recorrido {
+  height: 100vh;
+  height: 100lvh;
+}
+@supports (height: 100lvh) {
+  :root {
+    --barra-movil: calc(100lvh - 100svh);
+  }
+}

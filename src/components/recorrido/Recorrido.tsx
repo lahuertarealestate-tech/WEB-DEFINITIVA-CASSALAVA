@@ -149,7 +149,9 @@ export default function Recorrido({ tramos }: { tramos: Tramo[] }) {
 
     const progreso = () => {
       const r = sec.getBoundingClientRect();
-      const recorrido = r.height - window.innerHeight;
+      // se mide con el bloque fijo (no con la ventana): en móvil la ventana cambia al ocultarse la barra
+      const alto = canvas.parentElement?.clientHeight || window.innerHeight;
+      const recorrido = r.height - alto;
       return recorrido > 0 ? Math.min(1, Math.max(0, -r.top / recorrido)) : 0;
     };
 
@@ -321,7 +323,7 @@ export default function Recorrido({ tramos }: { tramos: Tramo[] }) {
       aria-label="Recorrido por una vivienda: de la fachada al interior y a la obra"
       className="relative h-[1080vh] md:h-[1500vh]"
     >
-      <div className="sobre-oscuro sticky top-0 h-[100svh] w-full overflow-hidden bg-tinta text-cal">
+      <div className="sobre-oscuro alto-recorrido sticky top-0 w-full overflow-hidden bg-tinta text-cal">
         <canvas ref={lienzo} aria-hidden className="absolute inset-0 h-full w-full" />
         <noscript>
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -343,7 +345,7 @@ export default function Recorrido({ tramos }: { tramos: Tramo[] }) {
                 textos.current[i] = el;
               }}
               style={{ opacity: i === 0 ? 1 : 0, visibility: i === 0 ? "visible" : "hidden" }}
-              className={`absolute bottom-[11svh] px-5 will-change-transform md:bottom-[12svh] md:px-12 ${
+              className={`absolute bottom-[calc(11svh+var(--barra-movil,0px))] px-5 will-change-transform md:bottom-[calc(12svh+var(--barra-movil,0px))] md:px-12 ${
                 t.lado === "derecha" ? "right-0 text-left md:max-w-[36rem]" : "left-0 max-w-[48rem]"
               }`}
             >
@@ -370,7 +372,7 @@ export default function Recorrido({ tramos }: { tramos: Tramo[] }) {
         <div
           ref={pista}
           aria-hidden
-          className="absolute bottom-6 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 text-base text-cal/80 md:bottom-8"
+          className="absolute bottom-[calc(1.5rem+var(--barra-movil,0px))] left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 text-base text-cal/80 md:bottom-[calc(2rem+var(--barra-movil,0px))]"
         >
           <span>Desliza para entrar</span>
           <span className="block h-8 w-px animate-pulse bg-cal/70" />
