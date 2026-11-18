@@ -13,7 +13,8 @@ El script:
 
     python3 scripts/montar-recorrido.py clipA.mp4:180:0.25 clipB.mp4:178:0.12 ...
 
-  formato de cada clip:  ruta:último_fotograma:parte_del_scroll
+  formato de cada clip:  ruta:último_fotograma:parte_del_scroll[:paso]
+  (paso opcional por clip; si no se indica, se usa --paso)
 """
 
 import argparse
@@ -54,11 +55,13 @@ def main():
     try:
         imagenes = []  # (fuente, peso); fuente = ruta o (rutaA, rutaB, t) para un fundido
         for n, spec in enumerate(a.clips):
-            ruta, ultimo, parte = spec.rsplit(":", 2)
+            partes = spec.split(":")
+            ruta, ultimo, parte = partes[:3]
+            paso = int(partes[3]) if len(partes) > 3 else a.paso
             fr = extraer(ruta, os.path.join(tmp, f"c{n}"))[: int(ultimo)]
             g = [pequeno(f) for f in fr]
             dif = np.array([0.0] + [np.abs(g[i] - g[i - 1]).mean() for i in range(1, len(g))])
-            idx = list(range(0, len(fr), a.paso))
+            idx = list(range(0, len(fr), paso))
             if idx[-1] != len(fr) - 1:
                 idx.append(len(fr) - 1)
             pesos = np.array([dif[max(1, idx[k - 1] + 1) : i + 1].sum() if k else 0.0 for k, i in enumerate(idx)])

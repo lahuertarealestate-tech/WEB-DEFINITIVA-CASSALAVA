@@ -8,8 +8,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
-// Textos sincronizados con el recorrido (0–0.24 = acercamiento a la fachada, 0.24–0.38 = entrada por la ventana al salón en ruinas,
-// 0.38–0.68 = de ruinas a obra, 0.68–1 = de obra al salón reformado)
+// Textos sincronizados con el recorrido (0–0.26 = acercamiento a la fachada, 0.26–0.42 = entrada por la ventana del torreón
+// al salón de esquina en ruinas, 0.42–0.70 = de ruinas a obra, 0.70–1 = de obra al salón reformado)
 const tramos: Tramo[] = [
   {
     desde: 0,
