@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { getLenis } from "@/components/SmoothScroll";
 import { cormorant, inter } from "@/lib/fuentes";
+// El manifest va dentro del código: así no hay que esperar a descargarlo antes de pedir el primer fotograma
+import datosManifest from "../../../public/recorrido/manifest.json";
 
 /*
   Recorrido por scroll: un <canvas> fijo pinta un fotograma distinto según
@@ -30,6 +32,10 @@ type Manifest = {
   ritmo?: number[];
 };
 
+const manifest = datosManifest as Manifest;
+const urlFotograma = (juego: Juego, i: number) =>
+  `${juego.carpeta}/${String(i).padStart(juego.digitos, "0")}.${juego.ext}?v=${encodeURIComponent(manifest.version)}`;
+
 export type Tramo = {
   /** Progreso del recorrido (0–1) en el que aparece el texto */
   desde: number;
@@ -45,7 +51,11 @@ export type Tramo = {
 };
 
 const MAX_ESPERA_MS = 20000;
-const CONCURRENCIA = 6;
+/** Media query del juego vertical (móvil); el resto usa el horizontal */
+const MQ_MOVIL = "(max-width: 767px), (orientation: portrait) and (max-width: 1024px)";
+const MQ_ESCRITORIO = "(min-width: 768px) and (orientation: landscape), (min-width: 1025px)";
+/** La precarga solo espera a los fotogramas del principio del recorrido (hasta este progreso) */
+const ARRANQUE = 0.04;
 
 function suave(a: number, b: number, x: number) {
   const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
@@ -214,56 +224,82 @@ export default function Recorrido({ tramos }: { tramos: Tramo[] }) {
     window.addEventListener("resize", alRedimensionar);
 
     // ---------------------------------------------------------- precarga
-    const movil = window.matchMedia("(max-width: 767px), (orientation: portrait) and (max-width: 1024px)").matches;
+    const movil = window.matchMedia(MQ_MOVIL).matches;
+    const juego = movil ? manifest.movil : manifest.escritorio;
+    total = juego.total;
+    ritmo = manifest.ritmo ?? null;
+    imagenes = new Array(total).fill(null);
+    const pedido = new Uint8Array(total);
 
-    fetch("/recorrido/manifest.json")
-      .then((r) => r.json() as Promise<Manifest>)
-      .then((m) => {
-        if (cancelado) return;
-        const juego = movil ? m.movil : m.escritorio;
-        total = juego.total;
-        ritmo = m.ritmo ?? null;
-        imagenes = new Array(total).fill(null);
-        const url = (i: number) =>
-          `${juego.carpeta}/${String(i).padStart(juego.digitos, "0")}.${juego.ext}?v=${encodeURIComponent(m.version)}`;
+    // Para entrar solo hace falta el principio del recorrido (lo que se ve antes de hacer scroll):
+    // el fotograma 0 y uno de cada 3 hasta ARRANQUE. Todo lo demás se descarga después, en segundo plano.
+    let finArranque = 0;
+    while (finArranque < total - 1 && (ritmo ? ritmo[finArranque] : finArranque / (total - 1)) < ARRANQUE) finArranque++;
+    const arranque: number[] = [];
+    for (let i = 0; i <= finArranque; i += 3) arranque.push(i);
+    if (arranque[arranque.length - 1] !== finArranque) arranque.push(finArranque);
+    const enArranque = new Set(arranque);
 
-        // orden: primero el fotograma 0, luego uno de cada 8, después el resto
-        const orden: number[] = [0];
-        for (const paso of [8, 4, 2, 1]) {
-          for (let i = 0; i < total; i += paso) if (!orden.includes(i)) orden.push(i);
-        }
+    // Orden de fondo: primero uno de cada 8 en todo el recorrido (ya se ve entero), luego más densidad
+    const fondo: number[] = [];
+    for (const paso of [8, 4, 2, 1]) for (let i = 0; i < total; i += paso) fondo.push(i);
+    let cursorFondo = 0;
+    let cursorArranque = 0;
 
-        // Se deja entrar en cuanto está cargado uno de cada 4 fotogramas (el recorrido ya se ve completo);
-        // el resto sigue descargándose en segundo plano y se pinta el vecino más cercano mientras tanto.
-        const gruesos = Math.ceil(total / 4);
-        let hechos = 0;
-        let siguiente = 0;
-        const cargar = async (): Promise<void> => {
-          while (siguiente < orden.length && !cancelado) {
-            const i = orden[siguiente++];
-            const img = new Image();
-            img.decoding = "async";
-            img.src = url(i);
-            try {
-              await img.decode();
-              imagenes[i] = img;
-              if (i === 0) {
-                ajustar();
-                pintar(0);
-              }
-            } catch {
-              /* si un fotograma falla se usa el vecino más cercano */
-            }
-            hechos++;
-            if (hechos <= gruesos) setPorcentaje(Math.round((hechos / gruesos) * 100));
-            if (hechos === gruesos && !cancelado) desbloquear();
+    // Siguiente fotograma a pedir: primero el arranque; después, lo que tiene delante la posición
+    // actual del scroll (para que nunca falte el fotograma que se va a ver); y si no, el orden de fondo.
+    const siguienteFotograma = (): number => {
+      while (cursorArranque < arranque.length) {
+        const i = arranque[cursorArranque++];
+        if (!pedido[i]) return i;
+      }
+      const cur = Math.max(0, Math.round(actual));
+      for (const [paso, alcance] of [
+        [4, 60],
+        [2, 30],
+        [1, 12],
+      ]) {
+        const desde = Math.ceil(cur / paso) * paso;
+        for (let i = desde; i <= Math.min(total - 1, cur + alcance); i += paso) if (!pedido[i]) return i;
+      }
+      while (cursorFondo < fondo.length) {
+        const i = fondo[cursorFondo++];
+        if (!pedido[i]) return i;
+      }
+      return -1;
+    };
+
+    let hechosArranque = 0;
+    const cargar = async (): Promise<void> => {
+      while (!cancelado) {
+        const i = siguienteFotograma();
+        if (i < 0) return;
+        pedido[i] = 1;
+        const img = new Image();
+        img.decoding = "async";
+        if (i === 0) img.fetchPriority = "high";
+        img.src = urlFotograma(juego, i);
+        try {
+          await img.decode();
+          imagenes[i] = img;
+          if (i === 0) {
+            ajustar();
+            pintar(0);
           }
-        };
-        Promise.all(Array.from({ length: CONCURRENCIA }, cargar)).then(() => {
-          if (!cancelado) desbloquear();
-        });
-      })
-      .catch(desbloquear);
+        } catch {
+          /* si un fotograma falla se usa el vecino más cercano */
+        }
+        if (!terminado && enArranque.has(i)) {
+          hechosArranque++;
+          setPorcentaje(Math.round((hechosArranque / arranque.length) * 100));
+          if (hechosArranque === arranque.length) desbloquear();
+        }
+      }
+    };
+    const concurrencia = movil ? 6 : 10;
+    Promise.all(Array.from({ length: concurrencia }, cargar)).then(() => {
+      if (!cancelado) desbloquear();
+    });
 
     raf = requestAnimationFrame(bucle);
 
@@ -373,6 +409,10 @@ export default function Recorrido({ tramos }: { tramos: Tramo[] }) {
           <div ref={barra} className="h-full w-full origin-top scale-y-0 bg-cal" />
         </div>
       </div>
+
+      {/* El primer fotograma se pide desde el <head>, antes de que cargue el JavaScript */}
+      <link rel="preload" as="image" href={urlFotograma(manifest.escritorio, 0)} media={MQ_ESCRITORIO} fetchPriority="high" />
+      <link rel="preload" as="image" href={urlFotograma(manifest.movil, 0)} media={MQ_MOVIL} fetchPriority="high" />
 
       {!oculto && (
         <div
