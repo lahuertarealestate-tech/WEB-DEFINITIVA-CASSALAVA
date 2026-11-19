@@ -16,6 +16,8 @@ export default function Servicios() {
       <CabeceraPagina
         titulo="Del primer boceto a la entrega de llaves"
         entradilla="Puedes contratarnos para una sola fase, pero donde más aportamos es cuando llevamos todo el proceso: arquitectura, interiorismo y obra con el mismo equipo."
+        // Boceto a mano de la fachada del recorrido del home (public/images/boceto-fachada.webp)
+        ilustracion={{ src: "/images/boceto-fachada.webp", ancho: 1100, alto: 871 }}
       />
 
       {servicios.map((s, i) => (
