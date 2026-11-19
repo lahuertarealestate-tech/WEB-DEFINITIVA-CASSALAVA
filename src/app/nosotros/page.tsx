@@ -35,8 +35,15 @@ export default function Nosotros() {
         entradilla="CASSALAVA nació para que quien encarga una casa tenga delante a un único equipo: el que la diseña, el que la presupuesta y el que la levanta."
       />
 
-      <div className="relative mx-auto aspect-[16/9] max-w-[92rem] overflow-hidden bg-yeso md:aspect-[16/7]">
-        <Image src="/proyectos/pasillo-galeria.webp" alt="" fill sizes="100vw" className="object-cover" />
+      {/* El boceto que se convierte en edificio (public/images/nosotros-boceto-edificio.webp) */}
+      <div className="relative mx-auto aspect-[2/1] max-w-[92rem] overflow-hidden">
+        <Image
+          src="/images/nosotros-boceto-edificio.webp"
+          alt="Boceto a tinta de un edificio modernista de Madrid que se transforma en el edificio real restaurado"
+          fill
+          sizes="(min-width: 1472px) 1472px, 100vw"
+          className="object-cover object-top"
+        />
       </div>
 
       <section aria-labelledby="titulo-principios" className="mx-auto max-w-[92rem] px-5 py-14 md:px-12 md:py-20">
