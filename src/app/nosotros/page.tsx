@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import CabeceraPagina from "@/components/CabeceraPagina";
 
 export const metadata: Metadata = {
@@ -33,20 +32,9 @@ export default function Nosotros() {
       <CabeceraPagina
         titulo="Arquitectos que también construyen"
         entradilla="CASSALAVA nació para que quien encarga una casa tenga delante a un único equipo: el que la diseña, el que la presupuesta y el que la levanta."
+        // Foto a la derecha del texto (public/proyectos/pasillo-galeria.webp)
+        foto="/proyectos/pasillo-galeria.webp"
       />
-
-      {/* Imagen dentro de los márgenes de la página y alineada con el texto, no a pantalla completa */}
-      <div className="mx-auto max-w-[92rem] px-5 md:px-12">
-        <div className="relative aspect-[16/9] max-w-4xl overflow-hidden bg-yeso">
-          <Image
-            src="/proyectos/pasillo-galeria.webp"
-            alt=""
-            fill
-            sizes="(min-width: 960px) 896px, 100vw"
-            className="object-cover"
-          />
-        </div>
-      </div>
 
       <section aria-labelledby="titulo-principios" className="mx-auto max-w-[92rem] px-5 py-14 md:px-12 md:py-20">
         <h2 id="titulo-principios" className="text-titulo font-normal">
