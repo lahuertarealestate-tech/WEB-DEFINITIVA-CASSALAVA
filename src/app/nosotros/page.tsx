@@ -35,8 +35,17 @@ export default function Nosotros() {
         entradilla="CASSALAVA nació para que quien encarga una casa tenga delante a un único equipo: el que la diseña, el que la presupuesta y el que la levanta."
       />
 
-      <div className="relative mx-auto aspect-[16/9] max-w-[92rem] overflow-hidden bg-yeso md:aspect-[16/7]">
-        <Image src="/proyectos/pasillo-galeria.webp" alt="" fill sizes="100vw" className="object-cover" />
+      {/* Imagen dentro de los márgenes de la página y alineada con el texto, no a pantalla completa */}
+      <div className="mx-auto max-w-[92rem] px-5 md:px-12">
+        <div className="relative aspect-[16/9] max-w-4xl overflow-hidden bg-yeso">
+          <Image
+            src="/proyectos/pasillo-galeria.webp"
+            alt=""
+            fill
+            sizes="(min-width: 960px) 896px, 100vw"
+            className="object-cover"
+          />
+        </div>
       </div>
 
       <section aria-labelledby="titulo-principios" className="mx-auto max-w-[92rem] px-5 py-14 md:px-12 md:py-20">
