@@ -14,29 +14,29 @@ export const metadata: Metadata = {
 const tramos: Tramo[] = [
   {
     desde: 0,
-    hasta: 0.025,
+    hasta: 0.03,
     principal: true,
     // "\n" marca el salto de línea: "diseño y construcción" siempre en la misma línea
     titulo: "Arquitectura,\ndiseño y construcción",
     texto: "Proyectamos y construimos tu casa de principio a fin, con un solo equipo y un solo interlocutor.",
   },
   {
-    desde: 0.03,
-    hasta: 0.075,
+    desde: 0.04,
+    hasta: 0.14,
     titulo: "Arquitectura",
     marca: true,
     texto: "Proyectamos viviendas y rehabilitamos edificios respetando lo que ya tienen de valor.",
   },
   {
-    desde: 0.11,
-    hasta: 0.24,
+    desde: 0.16,
+    hasta: 0.27,
     titulo: "Diseño",
     marca: true,
     texto: "Distribución, luz, materiales y mobiliario a medida, pensados contigo y cerrados antes de empezar la obra.",
   },
   {
-    desde: 0.286,
-    hasta: 0.364,
+    desde: 0.29,
+    hasta: 0.42,
     titulo: "Construcción",
     marca: true,
     texto: "Demolemos, reforzamos y reconstruimos con equipo propio, de la estructura al último acabado.",
