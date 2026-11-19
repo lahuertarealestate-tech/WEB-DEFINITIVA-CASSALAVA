@@ -16,6 +16,7 @@ export default function Servicios() {
       <CabeceraPagina
         titulo="Del primer boceto a la entrega de llaves"
         entradilla="Puedes contratarnos para una sola fase, pero donde más aportamos es cuando llevamos todo el proceso: arquitectura, interiorismo y obra con el mismo equipo."
+        logo
       />
 
       {servicios.map((s, i) => (
