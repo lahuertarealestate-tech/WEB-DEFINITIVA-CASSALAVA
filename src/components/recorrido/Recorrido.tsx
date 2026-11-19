@@ -51,6 +51,8 @@ export type Tramo = {
 };
 
 const MAX_ESPERA_MS = 20000;
+/** La pantalla de carga se queda al menos este tiempo; con el fundido de 0,7 s dura unos 2 s en total */
+const CARGA_MIN_MS = 1200;
 /** Media query del juego vertical (móvil); el resto usa el horizontal */
 const MQ_MOVIL = "(max-width: 767px), (orientation: portrait) and (max-width: 1024px)";
 const MQ_ESCRITORIO = "(min-width: 768px) and (orientation: landscape), (min-width: 1025px)";
@@ -98,15 +100,32 @@ export default function Recorrido({ tramos }: { tramos: Tramo[] }) {
     pararLenis();
     const reintento = window.setTimeout(pararLenis, 50);
 
-    const desbloquear = () => {
+    // La barra avanza con lo que va cargando, pero nunca más deprisa que el tiempo mínimo,
+    // y la pantalla no se quita antes de CARGA_MIN_MS aunque todo haya llegado antes.
+    const inicio = performance.now();
+    let cargaPct = 0;
+    let cargado = false;
+    const abrir = () => {
       if (terminado) return;
       terminado = true;
+      window.clearInterval(reloj);
+      setPorcentaje(100);
       html.style.overflow = "";
       getLenis()?.start();
       setListo(true);
       window.setTimeout(() => !cancelado && setOculto(true), 900);
     };
-    const limite = window.setTimeout(desbloquear, MAX_ESPERA_MS);
+    const reloj = window.setInterval(() => {
+      if (terminado) return;
+      const tiempoPct = Math.min(100, ((performance.now() - inicio) / CARGA_MIN_MS) * 100);
+      setPorcentaje(Math.round(Math.min(cargaPct, tiempoPct)));
+      if (cargado && tiempoPct >= 100) abrir();
+    }, 80);
+    const desbloquear = () => {
+      cargado = true;
+      cargaPct = 100;
+    };
+    const limite = window.setTimeout(abrir, MAX_ESPERA_MS);
 
     // ---------------------------------------------------------- dibujo
     const ajustar = () => {
@@ -293,7 +312,7 @@ export default function Recorrido({ tramos }: { tramos: Tramo[] }) {
         }
         if (!terminado && enArranque.has(i)) {
           hechosArranque++;
-          setPorcentaje(Math.round((hechosArranque / arranque.length) * 100));
+          cargaPct = (hechosArranque / arranque.length) * 100;
           if (hechosArranque === arranque.length) desbloquear();
         }
       }
@@ -309,6 +328,7 @@ export default function Recorrido({ tramos }: { tramos: Tramo[] }) {
       cancelado = true;
       cancelAnimationFrame(raf);
       window.clearTimeout(limite);
+      window.clearInterval(reloj);
       window.clearTimeout(reintento);
       window.removeEventListener("resize", alRedimensionar);
       html.style.overflow = "";
