@@ -32,8 +32,8 @@ export default function Nosotros() {
       <CabeceraPagina
         titulo="Arquitectos que también construyen"
         entradilla="CASSALAVA nació para que quien encarga una casa tenga delante a un único equipo: el que la diseña, el que la presupuesta y el que la levanta."
-        // Foto a la derecha del texto (public/proyectos/pasillo-galeria.webp)
-        foto="/proyectos/pasillo-galeria.webp"
+        // Foto a la derecha del texto (public/images/nosotros.jpg: para cambiarla, sube otra con el mismo nombre)
+        foto="/images/nosotros.jpg"
       />
 
       <section aria-labelledby="titulo-principios" className="mx-auto max-w-[92rem] px-5 py-14 md:px-12 md:py-20">
