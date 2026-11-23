@@ -189,8 +189,8 @@ export default function Recorrido({ tramos }: { tramos: Tramo[] }) {
     };
 
     const actualizarTextos = (p: number) => {
-      // fracción del recorrido que dura cada fundido de texto (el recorrido mide ~1500vh: ≈19vh de scroll)
-      const fundido = 0.0125;
+      // fracción del recorrido que dura cada fundido de texto (el recorrido mide ~2160vh: ≈19vh de scroll)
+      const fundido = 0.0087;
       tramos.forEach((t, i) => {
         const el = textos.current[i];
         if (!el) return;
@@ -341,7 +341,7 @@ export default function Recorrido({ tramos }: { tramos: Tramo[] }) {
       id="recorrido"
       ref={seccion}
       aria-label="Recorrido por una vivienda: de la fachada al interior y a la obra"
-      className="relative h-[1080vh] md:h-[1500vh]"
+      className="relative h-[1560vh] md:h-[2160vh]"
     >
       <div className="sobre-oscuro alto-recorrido sticky top-0 w-full overflow-hidden bg-tinta text-cal">
         <canvas ref={lienzo} aria-hidden className="absolute inset-0 h-full w-full" />
